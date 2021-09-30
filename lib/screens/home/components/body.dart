@@ -44,16 +44,35 @@ class Subheading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: 350,
-        child: Text(
-          "Name of Bar",
-          textAlign: TextAlign.start,
-          style: Theme.of(context)
-              .textTheme
-              .headline5!
-              .copyWith(fontWeight: FontWeight.w700, fontSize: 17),
-        ));
+    return Row(
+      children: <Widget>[
+        Container(
+            margin: EdgeInsets.only(
+                left: kDefaultPadding * 2, top: kDefaultPadding / 4),
+            child: Text(
+              "가르고뜨",
+              textAlign: TextAlign.start,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+            )),
+        Container(
+            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+            padding: const EdgeInsets.symmetric(
+                horizontal: kDefaultPadding / 2, vertical: kDefaultPadding / 4),
+            decoration: BoxDecoration(
+                color: Colors.black45, borderRadius: BorderRadius.circular(50)),
+            child: Text(
+              "서울 / 서초구",
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  color: Colors.white),
+            )),
+      ],
+    );
   }
 }
 
