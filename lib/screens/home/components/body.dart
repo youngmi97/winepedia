@@ -47,7 +47,7 @@ class Subheading extends StatelessWidget {
     return Row(
       children: <Widget>[
         Container(
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
                 left: kDefaultPadding * 2, top: kDefaultPadding / 4),
             child: Text(
               "가르고뜨",
@@ -82,10 +82,11 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+        margin: const EdgeInsets.only(
+            left: kDefaultPadding * 2, top: kDefaultPadding / 4),
         width: 350,
         child: Text(
-          "Name of Bar",
+          "서초구에 위치한 혼술하기 좋은 와인바",
           textAlign: TextAlign.start,
           style: Theme.of(context)
               .textTheme
