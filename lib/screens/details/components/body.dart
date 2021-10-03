@@ -52,7 +52,7 @@ class Body extends StatelessWidget {
                                   //     onVerticalDragDown: (event) =>
                                   //         Navigator.pop(context)),
                                   decoration: const BoxDecoration(
-                                      color: Colors.purple,
+                                      color: Colors.white,
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(24),
                                           topRight: Radius.circular(24)))),
