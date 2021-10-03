@@ -43,35 +43,36 @@ class Body extends StatelessWidget {
                     initialChildSize: 0.7,
                     builder: (context, controller) {
                       return SingleChildScrollView(
-                          controller: controller,
-                          child: SizedBox(
-                              height: size.height,
-                              child: Stack(children: <Widget>[
-                                Container(
-                                    // child: GestureDetector(
-                                    //     onVerticalDragDown: (event) =>
-                                    //         Navigator.pop(context)),
-                                    decoration: const BoxDecoration(
-                                        color: Colors.purple,
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(24),
-                                            topRight: Radius.circular(24)))),
-                              ])));
+                        controller: controller,
+                        child: SizedBox(
+                            height: size.height,
+                            child: Stack(children: <Widget>[
+                              Container(
+                                  // child: GestureDetector(
+                                  //     onVerticalDragDown: (event) =>
+                                  //         Navigator.pop(context)),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.purple,
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(24),
+                                          topRight: Radius.circular(24)))),
+                              Container(
+                                  child: Column(children: <Widget>[
+                                SizedBox(height: 36),
+                                const Subheading(),
+                                const Description(),
+                                const Divider(
+                                  height: 28,
+                                  thickness: 1,
+                                  indent: kDefaultPadding * 2,
+                                  endIndent: kDefaultPadding * 2,
+                                ),
+                                const SommelierPhoto(),
+                                AudioPlayerLocalAsset(),
+                              ])),
+                            ])),
+                      );
                     })),
-            Container(
-                child: Column(children: <Widget>[
-              SizedBox(height: size.height * 0.4 - 50),
-              const Subheading(),
-              const Description(),
-              const Divider(
-                height: 28,
-                thickness: 1,
-                indent: kDefaultPadding * 2,
-                endIndent: kDefaultPadding * 2,
-              ),
-              const SommelierPhoto(),
-              AudioPlayerLocalAsset(),
-            ]))
           ])),
     ]);
   }
