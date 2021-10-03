@@ -35,7 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   animations: ^2.0.1
-
+  audioplayers: ^0.20.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
