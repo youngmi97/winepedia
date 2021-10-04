@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/constants.dart';
-import 'package:winepedia/screens/details/components/audio_player.dart';
 
 class Body extends StatelessWidget {
   final WineBar wineBar;
@@ -11,7 +10,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     // it will provide us with total height and width
     Size size = MediaQuery.of(context).size;
-    double height = size.height;
+    //double height = size.height;
     return Column(children: <Widget>[
       SizedBox(
           height: size.height,
@@ -48,28 +47,31 @@ class Body extends StatelessWidget {
                             height: size.height,
                             child: Stack(children: <Widget>[
                               Container(
-                                  // child: GestureDetector(
-                                  //     onVerticalDragDown: (event) =>
-                                  //         Navigator.pop(context)),
                                   decoration: const BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(24),
                                           topRight: Radius.circular(24)))),
-                              Container(
-                                  child: Column(children: <Widget>[
+                              Column(children: const <Widget>[
                                 SizedBox(height: 36),
-                                const Subheading(),
-                                const Description(),
-                                const Divider(
+                                Subheading(),
+                                Description(),
+                                Divider(
                                   height: 28,
                                   thickness: 1,
                                   indent: kDefaultPadding * 2,
                                   endIndent: kDefaultPadding * 2,
                                 ),
-                                const SommelierPhoto(),
-                                AudioPlayerLocalAsset(),
-                              ])),
+                                SommelierProfile(),
+                                Divider(
+                                  height: 28,
+                                  thickness: 1,
+                                  indent: kDefaultPadding * 2,
+                                  endIndent: kDefaultPadding * 2,
+                                ),
+                                WineList()
+                                //AudioPlayerLocalAsset(),
+                              ]),
                             ])),
                       );
                     })),
@@ -120,7 +122,8 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+        margin: const EdgeInsets.symmetric(
+            vertical: kDefaultPadding / 2, horizontal: kDefaultPadding * 2),
         width: 350,
         child: Text(
           "Name of Bar",
@@ -133,8 +136,8 @@ class Description extends StatelessWidget {
   }
 }
 
-class SommelierPhoto extends StatelessWidget {
-  const SommelierPhoto({Key? key}) : super(key: key);
+class SommelierProfile extends StatelessWidget {
+  const SommelierProfile({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -152,28 +155,47 @@ class SommelierPhoto extends StatelessWidget {
       ),
       Column(children: <Widget>[
         Container(
-            width: 275,
+            width: 240,
             margin: const EdgeInsets.only(
-                left: kDefaultPadding, bottom: kDefaultPadding / 2, right: 0),
-            child: Text(
-              "김유진 소믈리에",
-              textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
-            )),
+                left: kDefaultPadding,
+                bottom: kDefaultPadding / 2,
+                right: kDefaultPadding),
+            child: Row(children: <Widget>[
+              Flexible(
+                  child: Text(
+                "김유진 소믈리에",
+                textAlign: TextAlign.start,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
+              ))
+            ])),
         Container(
-            margin: const EdgeInsets.only(left: kDefaultPadding),
-            child: Text(
-              "처음 오는 손님께 주로 권해드리는 카르보네 \n소비뇽, 라비에이유 페름루즈, 마샤렐리 입니다.",
-              textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-            )),
+            width: 240,
+            margin: const EdgeInsets.only(
+                left: kDefaultPadding, right: kDefaultPadding),
+            child: Row(children: <Widget>[
+              Flexible(
+                  child: Text(
+                "처음 오는 손님께 주로 권해드리는 카르보네 소비뇽, 라비에이유 페름루즈, 마샤렐리 입니다.",
+                textAlign: TextAlign.start,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline5!
+                    .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+              ))
+            ])),
       ])
     ]);
+  }
+}
+
+class WineList extends StatelessWidget {
+  const WineList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
