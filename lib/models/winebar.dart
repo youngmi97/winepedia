@@ -20,7 +20,9 @@ List<WineBar> wineBars = [
     name: "Bloodshot",
     poster: "assets/images/bar_template.jpg",
     description: plotText,
-    wines: [],
+    wines: [
+      {"name": "Red Wine", "brand": "Jae's Wine", "country": "Italy"}
+    ],
   ),
   WineBar(
     id: 2,
