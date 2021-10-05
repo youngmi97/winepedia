@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/constants.dart';
+import 'package:winepedia/screens/details/components/scroll_screen.dart';
 
 class Body extends StatelessWidget {
   final WineBar wineBar;
@@ -75,6 +76,7 @@ class Body extends StatelessWidget {
                             ])),
                       );
                     })),
+            Scroll_Screen(),
           ])),
     ]);
   }
