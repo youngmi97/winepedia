@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
-import 'package:winepedia/screens/details/components/red_wine_page.dart';
+import 'package:winepedia/screens/details/components/wine_catalogue.dart';
 
 class Scroll_Screen extends StatelessWidget {
   const Scroll_Screen({Key? key}) : super(key: key);
@@ -109,7 +109,7 @@ class ScrollScreenStart extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              RedWinePage(),
+              WineCatalogue(),
               Icon(Icons.directions_transit),
               Icon(Icons.directions_bike),
               Icon(Icons.directions_bike),
