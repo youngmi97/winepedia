@@ -35,7 +35,7 @@ class WineDisplayContainer extends StatelessWidget {
     String myString = wineName.replaceAll(" ", "_");
     Size size = MediaQuery.of(context).size;
     return Container(
-        height: 227,
+        height: size.height * 0.25,
         width: size.width * 0.43,
         margin: const EdgeInsets.only(left: 20, top: 20),
         decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class WineDisplayContainer extends StatelessWidget {
             Container(
               height: 20,
               width: 20,
-              margin: const EdgeInsets.only(left: 148, top: 14),
+              margin: EdgeInsets.only(left: (size.width * 0.43 - 30), top: 14),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/$country.jpg"),
