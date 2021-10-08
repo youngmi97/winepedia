@@ -25,7 +25,8 @@ class CarouselCard extends StatelessWidget {
         children: <Widget>[
           wineBar.posterVideo.contains("mp4")
               ? Expanded(
-                  child: AssetPlayerWidget(wineBar.posterVideo),
+                  child: AssetPlayerWidget(
+                      wineBar.posterVideo, wineBar.posterImage),
                 )
               : Expanded(
                   child: Container(

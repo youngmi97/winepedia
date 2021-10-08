@@ -4,7 +4,9 @@ import 'package:winepedia/screens/home/components/video_player_widget.dart';
 
 class AssetPlayerWidget extends StatefulWidget {
   final String posterVideo;
-  const AssetPlayerWidget(this.posterVideo, {Key? key}) : super(key: key);
+  final String posterImage;
+  const AssetPlayerWidget(this.posterVideo, this.posterImage, {Key? key})
+      : super(key: key);
   @override
   _AssetPlayerWidgetState createState() => _AssetPlayerWidgetState();
 }
@@ -28,6 +30,6 @@ class _AssetPlayerWidgetState extends State<AssetPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoPlayerWidget(controller);
+    return VideoPlayerWidget(controller, widget.posterImage);
   }
 }

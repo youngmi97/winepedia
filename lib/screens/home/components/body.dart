@@ -164,7 +164,7 @@ class _CarouselState extends State<Carousel> {
   Widget buildSlider(int index) => AnimatedBuilder(
       animation: _pageController,
       builder: (context, child) {
-        double value = 1;
+        double value = 0;
         if (_pageController.position.haveDimensions) {
           value = index - _pageController.page!;
           value = (value * 0.038).clamp(-1, 1);
