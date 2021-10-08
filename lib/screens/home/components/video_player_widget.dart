@@ -22,7 +22,7 @@ class VideoPlayerWidget extends StatelessWidget {
   Widget buildVideo() => buildVideoPlayer();
 
   Widget buildVideoPlayer() => ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(50),
         child: VideoPlayer(controller),
       );
 }
