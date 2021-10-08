@@ -25,7 +25,7 @@ class Scroll_Screen extends StatelessWidget {
               return SingleChildScrollView(
                 controller: controller,
                 child: SizedBox(
-                  height: size.height,
+                  height: 985.6,
                   child: Stack(children: <Widget>[
                     Container(
                         decoration: const BoxDecoration(

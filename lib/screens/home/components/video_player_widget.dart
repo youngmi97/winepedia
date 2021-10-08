@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:winepedia/models/winebar.dart';
 
 class VideoPlayerWidget extends StatelessWidget {
   const VideoPlayerWidget(this.controller, {Key? key}) : super(key: key);
@@ -16,12 +17,7 @@ class VideoPlayerWidget extends StatelessWidget {
 
   Widget buildVideo() => buildVideoPlayer();
 
-  Widget buildVideoPlayer() =>
-      // AspectRatio(
-      //       aspectRatio: controller.value.aspectRatio,
-      //       child: VideoPlayer(controller),
-      //     );
-      ClipRRect(
+  Widget buildVideoPlayer() => ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: VideoPlayer(controller),
       );

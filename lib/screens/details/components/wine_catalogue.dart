@@ -35,7 +35,7 @@ class WineDisplayContainer extends StatelessWidget {
     String myString = wineName.replaceAll(" ", "_");
     Size size = MediaQuery.of(context).size;
     return Container(
-        height: size.height * 0.25,
+        height: 227,
         width: size.width * 0.43,
         margin: const EdgeInsets.only(left: 20, top: 20),
         decoration: BoxDecoration(

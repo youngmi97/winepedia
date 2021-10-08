@@ -21,7 +21,7 @@ class Body extends StatelessWidget {
                     decoration: BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(wineBar.poster)))),
+                            image: AssetImage(wineBar.posterImage)))),
               ],
             ),
             const SafeArea(child: BackButton()),

@@ -1,11 +1,12 @@
 // Our movie model
 class WineBar {
   final int id;
-  final String description, name, poster;
+  final String description, name, posterVideo, posterImage;
   final List<Map> wines;
 
   WineBar({
-    required this.poster,
+    required this.posterVideo,
+    required this.posterImage,
     required this.name,
     required this.id,
     required this.description,
@@ -18,7 +19,8 @@ List<WineBar> wineBars = [
   WineBar(
     id: 1,
     name: "Bloodshot",
-    poster: "assets/images/bar_template.jpg",
+    posterVideo: "assets/images/bar_template.jpg",
+    posterImage: "assets/images/bar_template.jpg",
     description: plotText,
     wines: [
       {"name": "Red Wine", "brand": "Jae's Wine", "country": "Italy"}
@@ -27,14 +29,16 @@ List<WineBar> wineBars = [
   WineBar(
     id: 2,
     name: "Bloodshot",
-    poster: "assets/images/bar_template.jpg",
+    posterVideo: "assets/gargotte.mp4",
+    posterImage: "assets/images/bar_template.jpg",
     description: plotText,
     wines: [],
   ),
   WineBar(
     id: 3,
     name: "Bloodshot",
-    poster: "assets/images/bar_template.jpg",
+    posterVideo: "assets/images/bar_template.jpg",
+    posterImage: "assets/images/bar_template.jpg",
     description: plotText,
     wines: [],
   ),
