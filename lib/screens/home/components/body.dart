@@ -11,7 +11,9 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        const AddressBar(),
         const Heading(),
         Carousel(),
         const Subheading(),
@@ -21,20 +23,42 @@ class Body extends StatelessWidget {
   }
 }
 
+class AddressBar extends StatelessWidget {
+  const AddressBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+        width: size.width,
+        height: size.height * 0.07,
+        color: const Color.fromRGBO(76, 3, 43, 1),
+        alignment: Alignment.center,
+        child: Text(
+          "현재 강남역 도보 10분 거리에 위치한 \n와인바만 보여드리고 있습니다.",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.headline5!.copyWith(
+              color: Colors.white, fontWeight: FontWeight.w400, fontSize: 17),
+        ));
+  }
+}
+
 class Heading extends StatelessWidget {
   const Heading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-        width: 350,
+        width: size.width,
+        margin: EdgeInsets.only(top: 24, left: kDefaultPadding),
         child: Text(
-          "Wine Bars",
+          "강남역 도보 10분 거리에 \n위치해 있는 와인바를 발견해보세요",
           textAlign: TextAlign.start,
           style: Theme.of(context)
               .textTheme
               .headline5!
-              .copyWith(fontWeight: FontWeight.w600, fontSize: 30),
+              .copyWith(fontWeight: FontWeight.w600, fontSize: 24),
         ));
   }
 }
@@ -122,7 +146,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
         child: AspectRatio(
             aspectRatio: 0.85,
             child: PageView.builder(
@@ -133,20 +157,20 @@ class _CarouselState extends State<Carousel> {
                 },
                 controller: _pageController,
                 itemCount: wineBars.length,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) => buildSlider(index))));
   }
 
   Widget buildSlider(int index) => AnimatedBuilder(
       animation: _pageController,
       builder: (context, child) {
-        double value = 0;
+        double value = 1;
         if (_pageController.position.haveDimensions) {
           value = index - _pageController.page!;
           value = (value * 0.038).clamp(-1, 1);
         }
         return AnimatedOpacity(
-          duration: Duration(milliseconds: 350),
+          duration: const Duration(milliseconds: 350),
           opacity: initialPage == index ? 1 : 0.4,
           child: Transform.rotate(
             angle: math.pi * value,

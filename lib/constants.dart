@@ -14,3 +14,9 @@ const kDefaultShadow = BoxShadow(
   blurRadius: 4,
   color: Colors.black26,
 );
+
+class Wine {
+  String wineName = "deafultWineName";
+  String grapeName = "defaultGrapeName";
+  String country = "country";
+}

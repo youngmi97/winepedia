@@ -4,7 +4,6 @@ import 'package:winepedia/screens/details/components/wine_catalogue.dart';
 
 class Scroll_Screen extends StatelessWidget {
   const Scroll_Screen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,7 +33,7 @@ class Scroll_Screen extends StatelessWidget {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(24),
                                 topRight: Radius.circular(24)))),
-                    const ScrollScreenStart(),
+                    ScrollScreenStart(),
                   ]),
                 ),
               );
@@ -43,7 +42,7 @@ class Scroll_Screen extends StatelessWidget {
 }
 
 class ScrollScreenStart extends StatelessWidget {
-  const ScrollScreenStart({Key? key}) : super(key: key);
+  ScrollScreenStart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +53,14 @@ class ScrollScreenStart extends StatelessWidget {
       const Subheading(),
       const Description(),
       const Divider(
-        height: 28,
+        height: 56,
         thickness: 1,
-        indent: kDefaultPadding * 2,
+        indent: kDefaultPadding,
         endIndent: kDefaultPadding,
       ),
       const SommelierProfile(),
       const Divider(
-        height: 28,
+        height: 56,
         thickness: 1,
         indent: kDefaultPadding,
         endIndent: kDefaultPadding,
@@ -137,7 +136,7 @@ class Subheading extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline5!
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+                  .copyWith(fontWeight: FontWeight.w700, fontSize: 17),
             )),
         Container(
             margin: const EdgeInsets.only(left: kDefaultPadding / 2),
@@ -165,8 +164,7 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
+        margin: const EdgeInsets.only(left: kDefaultPadding, top: 12),
         width: width,
         child: Text(
           "서초구에 위치한 혼술하기 좋은 와인바",
@@ -189,14 +187,14 @@ class SommelierProfile extends StatelessWidget {
           Container(
               width: 275,
               margin: const EdgeInsets.only(
-                  left: kDefaultPadding, bottom: kDefaultPadding / 2, right: 0),
+                  left: kDefaultPadding, bottom: kDefaultPadding / 2),
               child: Text(
                 "김유진 오너",
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
                     .textTheme
                     .headline5!
-                    .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
+                    .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
               )),
           Container(
               margin: const EdgeInsets.only(left: kDefaultPadding),
