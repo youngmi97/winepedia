@@ -215,9 +215,7 @@ class SommelierProfile extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/sommelier.jpg'),
-            fit: BoxFit.fill,
           ),
-          shape: BoxShape.circle,
         ),
       ),
     ]);

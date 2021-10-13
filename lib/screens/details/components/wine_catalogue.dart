@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winepedia/screens/winedetails/taste_bar.dart';
 
 class WineCatalogue extends StatelessWidget {
   const WineCatalogue({Key? key}) : super(key: key);
@@ -13,8 +14,29 @@ class WineCatalogue extends StatelessWidget {
             body: Column(children: <Widget>[
               Row(
                 children: <Widget>[
-                  WineDisplayContainer("로스 바스코스", "카르보네 소비뇽", "italy"),
-                  WineDisplayContainer("파미유 페랑", "라비에이유 페름루즈", "italy"),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const TasteBar(
+                                  "로스 바스코스", "카르보네 소비뇽", "italy")),
+                        );
+                      },
+                      child:
+                          WineDisplayContainer("로스 바스코스", "카르보네 소비뇽", "italy")),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TasteBar(
+                                "파미유 페랑", "라비에이유 페름루즈", "france")),
+                      );
+                    },
+                    child:
+                        WineDisplayContainer("파미유 페랑", "라비에이유 페름루즈", "france"),
+                  )
                 ],
               ),
               Row(children: [
@@ -25,14 +47,15 @@ class WineCatalogue extends StatelessWidget {
 }
 
 class WineDisplayContainer extends StatelessWidget {
-  WineDisplayContainer(this.wineName, this.grapeName, this.country, {Key? key})
+  const WineDisplayContainer(this.wineName, this.grapeName, this.country,
+      {Key? key})
       : super(key: key);
   final String wineName;
   final String grapeName;
   final String country;
   @override
   Widget build(BuildContext context) {
-    String myString = wineName.replaceAll(" ", "_");
+    String wineString = wineName.replaceAll(" ", "_");
     Size size = MediaQuery.of(context).size;
     return Container(
         height: 227,
@@ -65,7 +88,7 @@ class WineDisplayContainer extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 14),
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/images/$myString.jpg'),
+                        image: AssetImage('assets/images/$wineString.jpg'),
                         fit: BoxFit.fill,
                       ),
                     ),
