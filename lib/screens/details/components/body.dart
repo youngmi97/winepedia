@@ -11,7 +11,7 @@ class Body extends StatelessWidget {
     // it will provide us with total height and width
     Size size = MediaQuery.of(context).size;
     return Column(children: <Widget>[
-      Container(
+      SizedBox(
           height: size.height,
           child: Stack(children: <Widget>[
             Column(
@@ -25,7 +25,7 @@ class Body extends StatelessWidget {
               ],
             ),
             const SafeArea(child: BackButton()),
-            const Scroll_Screen(),
+            const ScrollScreen(),
           ])),
     ]);
   }

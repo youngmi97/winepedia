@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
-import 'package:winepedia/screens/winedetails/components/body.dart';
 
 class FoodPairing extends StatelessWidget {
   const FoodPairing({Key? key}) : super(key: key);
@@ -21,17 +20,16 @@ class FoodPairing extends StatelessWidget {
                 .headline5!
                 .copyWith(fontWeight: FontWeight.bold, fontSize: 17),
           )),
-      Row(children: <Widget>[
+      Row(children: const <Widget>[
         FoodDisplayContainer("소시지 아스파라거스 볶음"),
         FoodDisplayContainer("사천식 닭가슴살"),
       ])
     ]);
-    ;
   }
 }
 
 class FoodDisplayContainer extends StatelessWidget {
-  FoodDisplayContainer(this.foodName, {Key? key}) : super(key: key);
+  const FoodDisplayContainer(this.foodName, {Key? key}) : super(key: key);
   final String foodName;
   @override
   Widget build(BuildContext context) {

@@ -9,20 +9,19 @@ class VideoPlayerWidget extends StatelessWidget {
   final String posterImage;
 
   @override
-  Widget build(BuildContext context) =>
-      controller != null && controller.value.isInitialized
-          ? Container(alignment: Alignment.topCenter, child: buildVideo())
-          : Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  boxShadow: const [kDefaultShadow],
-                  image: DecorationImage(
-                      fit: BoxFit.fill, image: AssetImage(posterImage))));
+  Widget build(BuildContext context) => controller.value.isInitialized
+      ? Container(alignment: Alignment.topCenter, child: buildVideo())
+      : Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [kDefaultShadow],
+              image: DecorationImage(
+                  fit: BoxFit.fill, image: AssetImage(posterImage))));
 
   Widget buildVideo() => buildVideoPlayer();
 
   Widget buildVideoPlayer() => ClipRRect(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(12),
         child: VideoPlayer(controller),
       );
 }

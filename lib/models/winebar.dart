@@ -37,7 +37,7 @@ List<WineBar> wineBars = [
   WineBar(
     id: 3,
     name: "Bloodshot",
-    posterVideo: "assets/images/bar_template.jpg",
+    posterVideo: "assets/cachi.mp4",
     posterImage: "assets/images/bar_template.jpg",
     description: plotText,
     wines: [],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:winepedia/screens/winedetails/components/scroll_screen.dart';
 import 'package:winepedia/screens/winedetails/components/wine_taste_bar.dart';
 import 'package:winepedia/screens/winedetails/components/food_pairing.dart';
@@ -32,14 +31,14 @@ class Body extends StatelessWidget {
                                 topLeft: Radius.circular(24),
                                 topRight: Radius.circular(24)))),
                     Column(children: <Widget>[
-                      Scroll_Screen(wineName, grapeName, country),
+                      ScrollScreen(wineName, grapeName, country),
                       const Divider(
                         height: 48,
                         thickness: 1,
                         indent: kDefaultPadding,
                         endIndent: kDefaultPadding,
                       ),
-                      const Wine_Taste_Bar(),
+                      const WineTasteBar(),
                       const Divider(
                         height: 48,
                         thickness: 1,

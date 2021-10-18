@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
 import 'package:winepedia/screens/details/components/wine_catalogue.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Scroll_Screen extends StatelessWidget {
-  const Scroll_Screen({Key? key}) : super(key: key);
+class ScrollScreen extends StatelessWidget {
+  const ScrollScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -47,7 +48,7 @@ class ScrollScreenStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    String addr = "서울 서초구 효령로77길 34 아크로텔 116호";
     return Column(children: <Widget>[
       const SizedBox(height: 36),
       const Subheading(),
@@ -58,7 +59,9 @@ class ScrollScreenStart extends StatelessWidget {
         indent: kDefaultPadding,
         endIndent: kDefaultPadding,
       ),
-      const SommelierProfile(),
+      WineBarAddress(addr),
+      WineBarTime(),
+      WineBarInsta(),
       const Divider(
         height: 56,
         thickness: 1,
@@ -109,7 +112,7 @@ class ScrollScreenStart extends StatelessWidget {
           body: const TabBarView(
             children: [
               WineCatalogue(),
-              Icon(Icons.directions_transit),
+              FaIcon(FontAwesomeIcons.instagram),
               Icon(Icons.directions_bike),
               Icon(Icons.directions_bike),
             ],
@@ -117,6 +120,88 @@ class ScrollScreenStart extends StatelessWidget {
         ),
       )),
     ]);
+  }
+}
+
+class WineBarAddress extends StatelessWidget {
+  WineBarAddress(this.addr, {Key? key}) : super(key: key);
+  final String addr;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+            margin: const EdgeInsets.only(left: kDefaultPadding),
+            child: FaIcon(FontAwesomeIcons.mapMarkerAlt, size: 15)),
+        Container(
+            height: 15,
+            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+            child: Text(
+              addr,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15),
+            )),
+      ],
+    );
+  }
+}
+
+class WineBarTime extends StatelessWidget {
+  const WineBarTime({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.only(top: kDefaultPadding),
+        child: Row(
+          children: <Widget>[
+            Container(
+                width: 30,
+                height: 30,
+                margin: const EdgeInsets.only(left: kDefaultPadding),
+                child: FaIcon(FontAwesomeIcons.clock, size: 15)),
+            Container(
+                height: 45,
+                margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+                child: Text(
+                  "수요일 17:00~22:00",
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+                )),
+          ],
+        ));
+  }
+}
+
+class WineBarInsta extends StatelessWidget {
+  const WineBarInsta({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+            margin: const EdgeInsets.only(
+                left: kDefaultPadding, top: kDefaultPadding),
+            child: FaIcon(FontAwesomeIcons.clock, size: 15)),
+        Container(
+            height: 45,
+            margin: const EdgeInsets.only(
+                left: kDefaultPadding / 2, top: kDefaultPadding),
+            child: Text(
+              "instagram address",
+              textAlign: TextAlign.start,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+            )),
+      ],
+    );
   }
 }
 
@@ -174,59 +259,5 @@ class Description extends StatelessWidget {
               .headline5!
               .copyWith(fontWeight: FontWeight.w400, fontSize: 17),
         ));
-  }
-}
-
-class SommelierProfile extends StatelessWidget {
-  const SommelierProfile({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      Column(
-        children: <Widget>[
-          Container(
-              width: 275,
-              margin: const EdgeInsets.only(
-                  left: kDefaultPadding, bottom: kDefaultPadding / 2),
-              child: Text(
-                "김유진 오너",
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(fontWeight: FontWeight.w600, fontSize: 17),
-              )),
-          Container(
-              margin: const EdgeInsets.only(left: kDefaultPadding),
-              child: Text(
-                "처음 오는 손님께 주로 권해드리는 카르보네 \n소비뇽, 라비에이유 페름루즈, 마샤렐리 입니다.",
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5!
-                    .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-              )),
-        ],
-      ),
-      Container(
-        height: 60.0,
-        width: 60.0,
-        margin: const EdgeInsets.only(left: kDefaultPadding),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/sommelier.jpg'),
-          ),
-        ),
-      ),
-    ]);
-  }
-}
-
-class WineList extends StatelessWidget {
-  const WineList({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

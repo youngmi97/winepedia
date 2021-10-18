@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:winepedia/constants.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/home/components/carousel_card.dart';
 import '../../../constants.dart';
-import 'dart:math' as math;
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -12,12 +12,10 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const AddressBar(),
-        const Heading(),
+      children: const <Widget>[
+        AddressBar(),
+        Heading(),
         Carousel(),
-        const Subheading(),
-        const Description()
       ],
     );
   }
@@ -51,7 +49,7 @@ class Heading extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
         width: size.width,
-        margin: EdgeInsets.only(top: 24, left: kDefaultPadding),
+        margin: const EdgeInsets.only(top: 24, left: kDefaultPadding),
         child: Text(
           "강남역 도보 10분 거리에 \n위치해 있는 와인바를 발견해보세요",
           textAlign: TextAlign.start,
@@ -63,119 +61,105 @@ class Heading extends StatelessWidget {
   }
 }
 
-class Subheading extends StatelessWidget {
-  const Subheading({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-            margin: const EdgeInsets.only(
-                left: kDefaultPadding * 2, top: kDefaultPadding / 4),
-            child: Text(
-              "가르고뜨",
-              textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-            )),
-        Container(
-            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
-            padding: const EdgeInsets.symmetric(
-                horizontal: kDefaultPadding / 2, vertical: kDefaultPadding / 4),
-            decoration: BoxDecoration(
-                color: Colors.black45, borderRadius: BorderRadius.circular(50)),
-            child: Text(
-              "서울 / 서초구",
-              textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                  color: Colors.white),
-            )),
-      ],
-    );
-  }
-}
-
-class Description extends StatelessWidget {
-  const Description({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(
-            left: kDefaultPadding * 2, top: kDefaultPadding / 4),
-        width: 350,
-        child: Text(
-          "서초구에 위치한 혼술하기 좋은 와인바",
-          textAlign: TextAlign.start,
-          style: Theme.of(context)
-              .textTheme
-              .headline5!
-              .copyWith(fontWeight: FontWeight.w400, fontSize: 17),
-        ));
-  }
-}
-
 class Carousel extends StatefulWidget {
+  const Carousel({Key? key}) : super(key: key);
   @override
   _CarouselState createState() => _CarouselState();
 }
 
 class _CarouselState extends State<Carousel> {
-  late PageController _pageController;
+  //late PageController _pageController;
   int initialPage = 1;
 
   @override
-  void initState() {
-    //so that we can small portion shown on left and right side
-    super.initState();
-    _pageController =
-        PageController(viewportFraction: 0.8, initialPage: initialPage);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
-        child: AspectRatio(
-            aspectRatio: 0.85,
-            child: PageView.builder(
-                onPageChanged: (value) {
-                  setState(() {
-                    initialPage = value;
-                  });
-                },
-                controller: _pageController,
-                itemCount: wineBars.length,
-                physics: const ClampingScrollPhysics(),
-                itemBuilder: (context, index) => buildSlider(index))));
+        child: CarouselSlider(
+          options: CarouselOptions(
+            height: size.height * 0.7,
+            initialPage: 1,
+            enableInfiniteScroll: false,
+            enlargeCenterPage: true,
+            onPageChanged: (index, reason) {
+              setState(() {
+                initialPage = index;
+              });
+            },
+          ),
+          items: [
+            CarouselPage(initialPage, 0),
+            CarouselPage(initialPage, 1),
+            CarouselPage(initialPage, 2),
+          ],
+        ));
+
+    // @override
+    // void initState() {
+    //   //so that we can small portion shown on left and right side
+    //   super.initState();
+    //   _pageController =
+    //       PageController(viewportFraction: 0.75, initialPage: initialPage);
+    // }
+
+    // @override
+    // void dispose() {
+    //   super.dispose();
+    //   _pageController.dispose();
+    // }
+    // Padding(
+    //     padding: const EdgeInsets.symmetric(
+    //       vertical: kDefaultPadding,
+    //     ),
+    //     child: AspectRatio(
+    //         aspectRatio: 0.75,
+    //         child: PageView.builder(
+    //             onPageChanged: (index) {
+    //               setState(() {
+    //                 initialPage = index;
+    //               });
+    //             },
+    //             controller: _pageController,
+    //             itemCount: wineBars.length,
+    //             physics: const ClampingScrollPhysics(),
+    //             itemBuilder: (context, index) => buildSlider(index))));
   }
 
-  Widget buildSlider(int index) => AnimatedBuilder(
-      animation: _pageController,
-      builder: (context, child) {
-        double value = 0;
-        if (_pageController.position.haveDimensions) {
-          value = index - _pageController.page!;
-          value = (value * 0.038).clamp(-1, 1);
-        }
-        return AnimatedOpacity(
-          duration: const Duration(milliseconds: 350),
-          opacity: initialPage == index ? 1 : 0.4,
-          child: Transform.rotate(
-            angle: math.pi * value,
-            child: CarouselCard(wineBar: wineBars[index]),
-          ),
-        );
-      });
+//   Widget buildSlider(int index) => (
+//           animation: _pageController,
+//          builder: (context, child) {
+//         double value = 1;
+//         if (_pageController.position.haveDimensions) {
+//           value = index - _pageController.page!;
+//           value = (value * 0.038).clamp(-1, 1);
+//         }
+//         return AnimatedOpacity(
+//           duration: const Duration(milliseconds: 350),
+//           opacity: initialPage == index ? 1 : 0.4,
+//           child: Transform.scale(
+//             scale: initialPage == index ? 1 : 1,
+//             child: CarouselCard(wineBar: wineBars[index]),
+//           ),
+//         );
+//       });
+// }
+}
+
+class CarouselPage extends StatelessWidget {
+  const CarouselPage(this.initialPage, this.index, {Key? key})
+      : super(key: key);
+  final int initialPage;
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 350),
+      opacity: initialPage == index ? 1 : 0.4,
+      // child: Transform.scale(
+      //   scale: initialPage == index ? 1 : 1,
+      child: CarouselCard(wineBar: wineBars[index]),
+      //),
+    );
+  }
 }

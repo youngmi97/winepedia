@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
 
-class Scroll_Screen extends StatelessWidget {
-  const Scroll_Screen(this.wineName, this.grapeName, this.country, {Key? key})
+class ScrollScreen extends StatelessWidget {
+  const ScrollScreen(this.wineName, this.grapeName, this.country, {Key? key})
       : super(key: key);
 
   final String wineName;
@@ -46,7 +46,7 @@ class Scroll_Screen extends StatelessWidget {
                 height: 18,
                 margin: const EdgeInsets.only(left: kDefaultPadding),
                 child: Text(
-                  "$grapeName",
+                  grapeName,
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme

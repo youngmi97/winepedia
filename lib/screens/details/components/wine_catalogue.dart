@@ -23,8 +23,8 @@ class WineCatalogue extends StatelessWidget {
                                   "로스 바스코스", "카르보네 소비뇽", "italy")),
                         );
                       },
-                      child:
-                          WineDisplayContainer("로스 바스코스", "카르보네 소비뇽", "italy")),
+                      child: const WineDisplayContainer(
+                          "로스 바스코스", "카르보네 소비뇽", "italy")),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -34,14 +34,12 @@ class WineCatalogue extends StatelessWidget {
                                 "파미유 페랑", "라비에이유 페름루즈", "france")),
                       );
                     },
-                    child:
-                        WineDisplayContainer("파미유 페랑", "라비에이유 페름루즈", "france"),
+                    child: const WineDisplayContainer(
+                        "파미유 페랑", "라비에이유 페름루즈", "france"),
                   )
                 ],
               ),
-              Row(children: [
-                WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
-              ])
+              const WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
             ])));
   }
 }

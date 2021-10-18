@@ -46,5 +46,22 @@
   			<key>NSAllowsArbitraryLoads</key>
   	<true/>
 	</dict>
+	<dict>
+  <key>NMFClientId</key>
+  <string>y015rtl9vn</string>
+  <key>io.flutter.embedded_views_preview</key>
+  <true/>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
+<dict>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>USAGE PERPOSE</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>USAGE PERPOSE</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>USAGE PERPOSE</string>
+</dict>
+
 </dict>
 </plist>

@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class AudioPlayerLocalAsset extends StatefulWidget {
+  const AudioPlayerLocalAsset({Key? key}) : super(key: key);
   @override
   _AudioPlayerLocalAssetState createState() => _AudioPlayerLocalAssetState();
 }
@@ -53,8 +54,7 @@ class _AudioPlayerLocalAssetState extends State<AudioPlayerLocalAsset> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       children: [
         /// Compulsory
         IconButton(
@@ -69,6 +69,6 @@ class _AudioPlayerLocalAssetState extends State<AudioPlayerLocalAsset> {
                 ? Icons.pause_rounded
                 : Icons.play_arrow_rounded)),
       ],
-    ));
+    );
   }
 }
