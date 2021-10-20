@@ -49,7 +49,7 @@ class Body extends StatelessWidget {
               ),
               child: GestureDetector(
                   onTap: () {
-                    () => launch("tel://21213123123");
+                    launch("tel:01029742228");
                   },
                   child: Container(
                       decoration: BoxDecoration(

@@ -55,7 +55,7 @@ class ScrollScreenState extends State<ScrollScreen> {
                 return SingleChildScrollView(
                   controller: controller,
                   child: SizedBox(
-                    height: 985.6,
+                    height: 1095.6,
                     child: Stack(children: <Widget>[
                       Container(
                           decoration: const BoxDecoration(
@@ -85,10 +85,21 @@ class ScrollScreenState extends State<ScrollScreen> {
                         ),
                       ],
                     ),
-                    child: Column(children: const <Widget>[
-                      SizedBox(height: 36),
-                      Subheading(),
-                      Description(),
+                    child: Column(children: <Widget>[
+                      Stack(children: [
+                        const SizedBox(height: 36),
+                        Container(
+                          margin: const EdgeInsets.only(top: 8),
+                          height: 4,
+                          width: 48,
+                          decoration: const BoxDecoration(
+                              color: Color(0x543C3C43),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(999))),
+                        )
+                      ]),
+                      const Subheading(),
+                      const Description(),
                     ])),
               ),
               visible: visibility),
@@ -104,7 +115,17 @@ class ScrollScreenStart extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     String addr = "서울 서초구 효령로77길 34 아크로텔 116호";
     return Column(children: <Widget>[
-      const SizedBox(height: 36),
+      Stack(children: [
+        const SizedBox(height: 36),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          height: 4,
+          width: 48,
+          decoration: const BoxDecoration(
+              color: Color(0x543C3C43),
+              borderRadius: BorderRadius.all(Radius.circular(999))),
+        )
+      ]),
       const Subheading(),
       const Description(),
       const Divider(
@@ -114,7 +135,7 @@ class ScrollScreenStart extends StatelessWidget {
         endIndent: kDefaultPadding,
       ),
       WineBarAddress(addr),
-      WineBarTime(),
+      WineBarOpen(),
       WineBarInsta(),
       const Divider(
         height: 56,
@@ -205,32 +226,80 @@ class WineBarAddress extends StatelessWidget {
   }
 }
 
-class WineBarTime extends StatelessWidget {
-  const WineBarTime({Key? key}) : super(key: key);
+class WineBarOpen extends StatelessWidget {
+  const WineBarOpen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    DateTime date = DateTime.now();
     return Container(
         child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
             width: 30,
             height: 30,
             alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: kDefaultPadding),
+            margin: const EdgeInsets.only(top: 13.5, left: kDefaultPadding),
             child: const FaIcon(FontAwesomeIcons.clock, size: 15)),
-        Container(
-            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
-            child: Text(
-              "수요일 17:00~22:00",
-              textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-            )),
+        Expanded(
+          child: ListTileTheme(
+              contentPadding: EdgeInsets.only(left: kDefaultPadding / 2),
+              child: Theme(
+                  data: ThemeData(
+                    dividerColor: Colors.transparent,
+                    secondaryHeaderColor: Colors.transparent,
+                  ),
+                  child: ExpansionTile(
+                    backgroundColor: Colors.transparent,
+                    expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                    initiallyExpanded: false,
+                    //childrenPadding: EdgeInsets.all(16),
+                    title: TimeOpen(date.weekday - 1),
+                    children: [
+                      TimeOpen(0),
+                      TimeOpen(1),
+                      TimeOpen(2),
+                      TimeOpen(3),
+                      TimeOpen(4),
+                      TimeOpen(5),
+                      TimeOpen(6),
+                    ],
+                  ))),
+        )
       ],
     ));
+  }
+}
+
+class TimeOpen extends StatelessWidget {
+  TimeOpen(this.date, {Key? key}) : super(key: key);
+  final int date;
+  final List<String> openHours = [
+    "월요일 17:00~22:00",
+    "화요일 17:00~22:00",
+    "수요일 17:00~22:00",
+    "목요일 17:00~22:00",
+    "금요일 17:00~22:00",
+    "토요일 휴무",
+    "일요일 휴무",
+  ];
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width - 30 - 2 * kDefaultPadding,
+      //margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+      child: Text(
+        openHours[date],
+        textAlign: TextAlign.start,
+        style: Theme.of(context)
+            .textTheme
+            .headline5!
+            .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+      ),
+    );
   }
 }
 
@@ -253,10 +322,10 @@ class WineBarInsta extends StatelessWidget {
             child: Text(
               "instagram address",
               textAlign: TextAlign.start,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5!
-                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15),
             )),
       ],
     ));
@@ -319,3 +388,32 @@ class Description extends StatelessWidget {
         ));
   }
 }
+
+// class TextTilePage extends StatefulWidget {
+//   @override
+//   _TextTilePageState createState() => _TextTilePageState();
+// }
+
+// class _TextTilePageState extends State<TextTilePage> {
+//   static final double radius = 20;
+
+//   bool isExpanded = false;
+
+//   Widget buildText(BuildContext context) => Theme(
+//         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+//         child: ExpansionTile(
+//           initiallyExpanded: isExpanded,
+//           childrenPadding: EdgeInsets.all(16).copyWith(top: 0),
+//           title: Text(
+//             '👩 Sarah Pepperstone',
+//             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+//           ),
+//           children: [
+//             Text(
+//               'My name is Sarah and I am a New York City based Flutter developer. I help entrepreneurs & businesses figure out how to build scalable applications.\n\nWith over 7 years experience spanning across many industries from B2B to B2C, I live and breath Flutter.',
+//               style: TextStyle(fontSize: 18, height: 1.4),
+//             ),
+//           ],
+//         ),
+//       );
+// }
