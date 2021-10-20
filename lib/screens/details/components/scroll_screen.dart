@@ -3,14 +3,31 @@ import 'package:winepedia/constants.dart';
 import 'package:winepedia/screens/details/components/wine_catalogue.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class ScrollScreen extends StatelessWidget {
-  const ScrollScreen({Key? key}) : super(key: key);
+class ScrollScreen extends StatefulWidget {
+  ScrollScreen({Key? key}) : super(key: key);
+  @override
+  ScrollScreenState createState() => ScrollScreenState();
+}
+
+class ScrollScreenState extends State<ScrollScreen> {
+  bool visibility = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return NotificationListener<DraggableScrollableNotification>(
         onNotification: (notification) {
+          if (notification.extent >= 1) {
+            //print(notification.extent);
+            setState(() {
+              visibility = true;
+            });
+            return true;
+          } else {
+            setState(() {
+              visibility = false;
+            });
+          }
+
           if (notification.extent < 0.7) {
             Navigator.maybePop(context);
             return true;
@@ -18,27 +35,64 @@ class ScrollScreen extends StatelessWidget {
             return true;
           }
         },
-        child: DraggableScrollableSheet(
-            minChildSize: 0.6,
-            maxChildSize: 1,
-            initialChildSize: 0.7,
-            builder: (context, controller) {
-              return SingleChildScrollView(
-                controller: controller,
-                child: SizedBox(
-                  height: 985.6,
-                  child: Stack(children: <Widget>[
-                    Container(
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(24),
-                                topRight: Radius.circular(24)))),
-                    ScrollScreenStart(),
-                  ]),
-                ),
-              );
-            }));
+        child: Stack(children: [
+          Visibility(
+              child: SizedBox(
+                height: 117,
+                child: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24)))),
+              ),
+              visible: visibility),
+          DraggableScrollableSheet(
+              minChildSize: 0.6,
+              maxChildSize: 1,
+              initialChildSize: 0.7,
+              builder: (context, controller) {
+                return SingleChildScrollView(
+                  controller: controller,
+                  child: SizedBox(
+                    height: 985.6,
+                    child: Stack(children: <Widget>[
+                      Container(
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24),
+                                  topRight: Radius.circular(24)))),
+                      ScrollScreenStart(),
+                    ]),
+                  ),
+                );
+              }),
+          Visibility(
+              child: SizedBox(
+                height: 117,
+                child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x0D000000),
+                          spreadRadius: 2,
+                          blurRadius: 16,
+                        ),
+                      ],
+                    ),
+                    child: Column(children: const <Widget>[
+                      SizedBox(height: 36),
+                      Subheading(),
+                      Description(),
+                    ])),
+              ),
+              visible: visibility),
+        ]));
   }
 }
 
@@ -131,10 +185,12 @@ class WineBarAddress extends StatelessWidget {
     return Row(
       children: <Widget>[
         Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
             margin: const EdgeInsets.only(left: kDefaultPadding),
             child: FaIcon(FontAwesomeIcons.mapMarkerAlt, size: 15)),
         Container(
-            height: 15,
             margin: const EdgeInsets.only(left: kDefaultPadding / 2),
             child: Text(
               addr,
@@ -153,28 +209,28 @@ class WineBarTime extends StatelessWidget {
   const WineBarTime({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-        margin: const EdgeInsets.only(top: kDefaultPadding),
         child: Row(
-          children: <Widget>[
-            Container(
-                width: 30,
-                height: 30,
-                margin: const EdgeInsets.only(left: kDefaultPadding),
-                child: FaIcon(FontAwesomeIcons.clock, size: 15)),
-            Container(
-                height: 45,
-                margin: const EdgeInsets.only(left: kDefaultPadding / 2),
-                child: Text(
-                  "수요일 17:00~22:00",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
-                )),
-          ],
-        ));
+      children: <Widget>[
+        Container(
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            margin: const EdgeInsets.only(left: kDefaultPadding),
+            child: const FaIcon(FontAwesomeIcons.clock, size: 15)),
+        Container(
+            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+            child: Text(
+              "수요일 17:00~22:00",
+              textAlign: TextAlign.start,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
+            )),
+      ],
+    ));
   }
 }
 
@@ -182,16 +238,18 @@ class WineBarInsta extends StatelessWidget {
   const WineBarInsta({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Container(
+        //margin: const EdgeInsets.only(top: kDefaultPadding),
+        child: Row(
       children: <Widget>[
         Container(
-            margin: const EdgeInsets.only(
-                left: kDefaultPadding, top: kDefaultPadding),
-            child: FaIcon(FontAwesomeIcons.clock, size: 15)),
+            width: 30,
+            height: 30,
+            alignment: Alignment.center,
+            margin: const EdgeInsets.only(left: kDefaultPadding),
+            child: const FaIcon(FontAwesomeIcons.instagram, size: 15)),
         Container(
-            height: 45,
-            margin: const EdgeInsets.only(
-                left: kDefaultPadding / 2, top: kDefaultPadding),
+            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
             child: Text(
               "instagram address",
               textAlign: TextAlign.start,
@@ -201,7 +259,7 @@ class WineBarInsta extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.w400, fontSize: 15),
             )),
       ],
-    );
+    ));
   }
 }
 

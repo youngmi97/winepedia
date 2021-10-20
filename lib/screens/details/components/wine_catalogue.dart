@@ -11,36 +11,38 @@ class WineCatalogue extends StatelessWidget {
         home: Scaffold(
             //Here you can set what ever background color you need.
             backgroundColor: Colors.grey[100],
-            body: Column(children: <Widget>[
-              Row(
+            body: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TasteBar(
-                                  "로스 바스코스", "카르보네 소비뇽", "italy")),
-                        );
-                      },
-                      child: const WineDisplayContainer(
-                          "로스 바스코스", "카르보네 소비뇽", "italy")),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const TasteBar(
-                                "파미유 페랑", "라비에이유 페름루즈", "france")),
-                      );
-                    },
-                    child: const WineDisplayContainer(
-                        "파미유 페랑", "라비에이유 페름루즈", "france"),
-                  )
-                ],
-              ),
-              const WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
-            ])));
+                  Row(
+                    children: <Widget>[
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TasteBar(
+                                      "로스 바스코스", "카르보네 소비뇽", "italy")),
+                            );
+                          },
+                          child: const WineDisplayContainer(
+                              "로스 바스코스", "카르보네 소비뇽", "italy")),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TasteBar(
+                                    "파미유 페랑", "라비에이유 페름루즈", "france")),
+                          );
+                        },
+                        child: const WineDisplayContainer(
+                            "파미유 페랑", "라비에이유 페름루즈", "france"),
+                      )
+                    ],
+                  ),
+                  const WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
+                ])));
   }
 }
 
@@ -62,6 +64,13 @@ class WineDisplayContainer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0D000000),
+              spreadRadius: 2,
+              blurRadius: 16,
+            ),
+          ],
         ),
         child: Stack(
           children: <Widget>[
