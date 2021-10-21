@@ -11,13 +11,14 @@ class ScrollScreen extends StatefulWidget {
 
 class ScrollScreenState extends State<ScrollScreen> {
   bool visibility = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return NotificationListener<DraggableScrollableNotification>(
         onNotification: (notification) {
-          if (notification.extent >= 1) {
-            //print(notification.extent);
+          print(notification.extent);
+          if (notification.extent >= 0.95) {
             setState(() {
               visibility = true;
             });
@@ -36,17 +37,6 @@ class ScrollScreenState extends State<ScrollScreen> {
           }
         },
         child: Stack(children: [
-          Visibility(
-              child: SizedBox(
-                height: 117,
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            topRight: Radius.circular(24)))),
-              ),
-              visible: visibility),
           DraggableScrollableSheet(
               minChildSize: 0.6,
               maxChildSize: 1,
@@ -69,9 +59,19 @@ class ScrollScreenState extends State<ScrollScreen> {
                 );
               }),
           Visibility(
-              child: SizedBox(
-                height: 117,
-                child: Container(
+              child: Stack(children: <Widget>[
+                Container(
+                    height: 117,
+                    width: size.width,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fitWidth,
+                            alignment: Alignment.topCenter,
+                            image:
+                                AssetImage("assets/images/bar_template.jpg")))),
+                Container(
+                    height: 117,
+                    margin: const EdgeInsets.only(top: 40),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -100,8 +100,8 @@ class ScrollScreenState extends State<ScrollScreen> {
                       ]),
                       const Subheading(),
                       const Description(),
-                    ])),
-              ),
+                    ]))
+              ]),
               visible: visibility),
         ]));
   }

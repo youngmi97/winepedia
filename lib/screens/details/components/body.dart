@@ -20,14 +20,16 @@ class Body extends StatelessWidget {
             Column(
               children: <Widget>[
                 Container(
+                    width: size.width,
                     height: size.height * 0.4 - 50,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
+                            alignment: Alignment.topCenter,
                             image: AssetImage(wineBar.posterImage)))),
               ],
             ),
-            const SafeArea(child: BackButton()),
+            //const SafeArea(child: BackButton()),
             ScrollScreen(),
           ])),
       Positioned(
