@@ -40,7 +40,7 @@ dependencies:
   carousel_slider: ^4.0.0
   font_awesome_flutter: ^9.1.0
   url_launcher: ^6.0.12
-  #naver_map_plugin: ^0.9.6
+  naver_map_plugin: ^0.9.6
 
 dev_dependencies:
   flutter_test:
