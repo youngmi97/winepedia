@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/screens/home/components/body.dart';
+import 'package:winepedia/screens/home/components/map.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,9 +19,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     Body(),
-    Text(
-      'Index 2: School',
-    ),
+    Map(),
   ];
 
   @override
