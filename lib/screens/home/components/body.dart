@@ -95,6 +95,7 @@ class _CarouselState extends State<Carousel> {
             CarouselPage(initialPage, 0),
             CarouselPage(initialPage, 1),
             CarouselPage(initialPage, 2),
+            CarouselPage(initialPage, 3),
           ],
         ));
 

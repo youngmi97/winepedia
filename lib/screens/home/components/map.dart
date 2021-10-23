@@ -48,6 +48,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
     LatLng(37.563153, 126.962190),
     LatLng(37.533153, 126.922190),
     LatLng(37.583153, 126.982190),
+    LatLng(37.541153, 126.952190),
   ];
 
   LatLng initialPos = const LatLng(37.563153, 126.962190);
@@ -177,6 +178,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
                   CarouselPage(0),
                   CarouselPage(1),
                   CarouselPage(2),
+                  CarouselPage(3),
                 ],
               ))
         ],
