@@ -1,6 +1,4 @@
 PODS:
-  - audioplayers (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - geolocator_apple (1.2.0):
     - Flutter
@@ -10,21 +8,17 @@ PODS:
     - Flutter
     - NMapsMap
   - NMapsMap (3.14.0)
-  - path_provider (0.0.1):
-    - Flutter
   - url_launcher (0.0.1):
     - Flutter
   - video_player (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - location (from `.symlinks/plugins/location/ios`)
   - naver_map_plugin (from `.symlinks/plugins/naver_map_plugin/ios`)
   - NMapsMap (= 3.14.0)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
 
@@ -33,8 +27,6 @@ SPEC REPOS:
     - NMapsMap
 
 EXTERNAL SOURCES:
-  audioplayers:
-    :path: ".symlinks/plugins/audioplayers/ios"
   Flutter:
     :path: Flutter
   geolocator_apple:
@@ -43,21 +35,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/location/ios"
   naver_map_plugin:
     :path: ".symlinks/plugins/naver_map_plugin/ios"
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
   video_player:
     :path: ".symlinks/plugins/video_player/ios"
 
 SPEC CHECKSUMS:
-  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   naver_map_plugin: d1d67733c56b20b88270d9da51218e18fa916232
   NMapsMap: 61c2abfc409bbcdc91583ccc455a5b6f64c7414e
-  path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
   url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
   video_player: ecd305f42e9044793efd34846e1ce64c31ea6fcb
 
