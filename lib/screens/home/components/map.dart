@@ -6,5 +6,6 @@ class Map extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NaverMap();
+    //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login failed")));
   }
 }
