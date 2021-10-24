@@ -35,13 +35,13 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_svg: ^0.22.0
   animations: ^2.0.1
-  audioplayers: ^0.20.1
+  #audioplayers: ^0.20.1
   video_player: ^2.2.5
   carousel_slider: ^4.0.0
   font_awesome_flutter: ^9.1.0
   url_launcher: ^6.0.12
   naver_map_plugin: ^0.9.6
-  location: ^4.3.0
+  #location: ^4.3.0
   geolocator: ^7.7.1
 
 dev_dependencies:

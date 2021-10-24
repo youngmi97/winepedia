@@ -189,7 +189,10 @@ class _BaseMapPageState extends State<BaseMapPage> {
   void _onMapCreated(NaverMapController controller) {
     _controller.complete(controller);
     //print("map crteate");
-    controller.moveCamera(CameraUpdate.scrollTo(initialPos));
+    controller.moveCamera(CameraUpdate.fitBounds(
+      LatLngBounds.fromLatLngList(_coordinates),
+      padding: 48,
+    ));
   }
 
   _onMapTap(LatLng position) async {

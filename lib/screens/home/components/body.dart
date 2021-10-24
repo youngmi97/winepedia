@@ -81,7 +81,7 @@ class _CarouselState extends State<Carousel> {
         padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
         child: CarouselSlider(
           options: CarouselOptions(
-            height: size.height * 0.63,
+            height: size.height * 0.6,
             initialPage: 1,
             enableInfiniteScroll: false,
             enlargeCenterPage: true,
