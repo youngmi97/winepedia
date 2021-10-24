@@ -4,7 +4,7 @@ import 'package:winepedia/screens/details/components/wine_catalogue.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ScrollScreen extends StatefulWidget {
-  ScrollScreen({Key? key}) : super(key: key);
+  const ScrollScreen({Key? key}) : super(key: key);
   @override
   ScrollScreenState createState() => ScrollScreenState();
 }
@@ -17,7 +17,7 @@ class ScrollScreenState extends State<ScrollScreen> {
     Size size = MediaQuery.of(context).size;
     return NotificationListener<DraggableScrollableNotification>(
         onNotification: (notification) {
-          print(notification.extent);
+          //print(notification.extent);
           if (notification.extent >= 0.95) {
             setState(() {
               visibility = true;
@@ -28,7 +28,6 @@ class ScrollScreenState extends State<ScrollScreen> {
               visibility = false;
             });
           }
-
           if (notification.extent < 0.7) {
             Navigator.maybePop(context);
             return true;
@@ -53,7 +52,7 @@ class ScrollScreenState extends State<ScrollScreen> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24),
                                   topRight: Radius.circular(24)))),
-                      ScrollScreenStart(),
+                      const ScrollScreenStart(),
                     ]),
                   ),
                 );
@@ -108,7 +107,7 @@ class ScrollScreenState extends State<ScrollScreen> {
 }
 
 class ScrollScreenStart extends StatelessWidget {
-  ScrollScreenStart({Key? key}) : super(key: key);
+  const ScrollScreenStart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -135,8 +134,8 @@ class ScrollScreenStart extends StatelessWidget {
         endIndent: kDefaultPadding,
       ),
       WineBarAddress(addr),
-      WineBarOpen(),
-      WineBarInsta(),
+      const WineBarOpen(),
+      const WineBarInsta(),
       const Divider(
         height: 56,
         thickness: 1,
@@ -199,7 +198,7 @@ class ScrollScreenStart extends StatelessWidget {
 }
 
 class WineBarAddress extends StatelessWidget {
-  WineBarAddress(this.addr, {Key? key}) : super(key: key);
+  const WineBarAddress(this.addr, {Key? key}) : super(key: key);
   final String addr;
   @override
   Widget build(BuildContext context) {
@@ -210,7 +209,7 @@ class WineBarAddress extends StatelessWidget {
             height: 30,
             alignment: Alignment.center,
             margin: const EdgeInsets.only(left: kDefaultPadding),
-            child: FaIcon(FontAwesomeIcons.mapMarkerAlt, size: 15)),
+            child: const FaIcon(FontAwesomeIcons.mapMarkerAlt, size: 15)),
         Container(
             margin: const EdgeInsets.only(left: kDefaultPadding / 2),
             child: Text(
@@ -231,10 +230,8 @@ class WineBarOpen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     DateTime date = DateTime.now();
-    return Container(
-        child: Row(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
@@ -245,7 +242,7 @@ class WineBarOpen extends StatelessWidget {
             child: const FaIcon(FontAwesomeIcons.clock, size: 15)),
         Expanded(
           child: ListTileTheme(
-              contentPadding: EdgeInsets.only(left: kDefaultPadding / 2),
+              contentPadding: const EdgeInsets.only(left: kDefaultPadding / 2),
               child: Theme(
                   data: ThemeData(
                     dividerColor: Colors.transparent,
@@ -269,7 +266,7 @@ class WineBarOpen extends StatelessWidget {
                   ))),
         )
       ],
-    ));
+    );
   }
 }
 
@@ -288,7 +285,7 @@ class TimeOpen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: size.width - 30 - 2 * kDefaultPadding,
       //margin: const EdgeInsets.only(left: kDefaultPadding / 2),
       child: Text(
@@ -307,9 +304,7 @@ class WineBarInsta extends StatelessWidget {
   const WineBarInsta({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-        //margin: const EdgeInsets.only(top: kDefaultPadding),
-        child: Row(
+    return Row(
       children: <Widget>[
         Container(
             width: 30,
@@ -328,7 +323,7 @@ class WineBarInsta extends StatelessWidget {
                   fontSize: 15),
             )),
       ],
-    ));
+    );
   }
 }
 

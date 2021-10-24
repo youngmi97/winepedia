@@ -10,14 +10,17 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const <Widget>[
-        AddressBar(),
-        Heading(),
-        Carousel(),
-      ],
-    );
+    return Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.white, toolbarHeight: 0, elevation: 0),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const <Widget>[
+            AddressBar(),
+            Heading(),
+            Carousel(),
+          ],
+        ));
   }
 }
 
@@ -92,6 +95,7 @@ class _CarouselState extends State<Carousel> {
             CarouselPage(initialPage, 0),
             CarouselPage(initialPage, 1),
             CarouselPage(initialPage, 2),
+            CarouselPage(initialPage, 3),
           ],
         ));
 
