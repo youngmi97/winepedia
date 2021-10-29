@@ -23,16 +23,22 @@ class TasteBar extends StatelessWidget {
                 child: const BackButton(
                   color: Colors.black,
                 )),
-            Container(
-                margin: const EdgeInsets.only(left: 14, top: 6.5),
-                child: Text(
-                  "가르고뜨",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5!
-                      .copyWith(fontWeight: FontWeight.w400, fontSize: 17),
-                ))
+            GestureDetector(
+                onTap: () {
+                  //print(index - 1);
+
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(left: 14, top: 6.5),
+                    child: Text(
+                      "가르고뜨",
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(fontWeight: FontWeight.w400, fontSize: 17),
+                    )))
           ]),
           Body(wineName, grapeName, country),
         ]));

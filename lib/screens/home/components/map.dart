@@ -118,7 +118,6 @@ class _BaseMapPageState extends State<BaseMapPage> {
             onSymbolTap: _onSymbolTap,
           ),
           GestureDetector(
-              behavior: HitTestBehavior.translucent,
               onTap: () {
                 _determinePosition().then((value) => {
                       //print(value.latitude),
@@ -316,7 +315,7 @@ class CarouselPage extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          print(index - 1);
+          //print(index - 1);
 
           Navigator.push(
             context,

@@ -5,22 +5,54 @@ import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/home/components/carousel_card.dart';
 import '../../../constants.dart';
 
-class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+class Body extends StatefulWidget {
+  Function hideBottomNavigation;
+  Function showBottomNavigation;
+  Body(this.showBottomNavigation, this.hideBottomNavigation, {Key? key})
+      : super(key: key);
+  @override
+  BodyState createState() => BodyState();
+}
 
+class BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white, toolbarHeight: 0, elevation: 0),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const <Widget>[
-            AddressBar(),
-            Heading(),
-            Carousel(),
-          ],
-        ));
+    Size size = MediaQuery.of(context).size;
+    return NotificationListener<ScrollNotification>(
+      onNotification: (scrollInfo) {
+        print(scrollInfo.metrics.pixels);
+        if (scrollInfo.metrics.pixels <= 0) {
+          widget.showBottomNavigation();
+          return true;
+        } else {
+          widget.hideBottomNavigation();
+          return false;
+        }
+      },
+      child: DraggableScrollableSheet(
+          minChildSize: 1,
+          maxChildSize: 1,
+          initialChildSize: 1,
+          builder: (context, controller) {
+            return SingleChildScrollView(
+              //reverse: true,
+              controller: controller,
+              //physics: ClampingScrollPhysics(),
+              child: Container(
+                height: size.height * 1.2,
+                child: Scaffold(
+                    body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const <Widget>[
+                    AddressBar(),
+                    Heading(),
+                    Carousel(),
+                  ],
+                )),
+              ),
+            );
+          }),
+    );
   }
 }
 
@@ -32,9 +64,10 @@ class AddressBar extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
         width: size.width,
-        height: size.height * 0.07,
+        height: 111,
         color: const Color.fromRGBO(76, 3, 43, 1),
-        alignment: Alignment.center,
+        alignment: Alignment.bottomCenter,
+        padding: const EdgeInsets.only(bottom: 14),
         child: Text(
           "현재 강남역 도보 10분 거리에 위치한 \n와인바만 보여드리고 있습니다.",
           textAlign: TextAlign.center,

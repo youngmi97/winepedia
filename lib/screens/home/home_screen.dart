@@ -49,6 +49,23 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  bool visible = true;
+  String abc = "bb";
+
+  showBottomNavigation() {
+    //print("callback triggered");
+    setState(() {
+      visible = true;
+    });
+  }
+
+  hideBottomNavigation() {
+    //print("callback triggered");
+    setState(() {
+      visible = false;
+    });
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -62,13 +79,14 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   final List<Widget> _widgetOptions = <Widget>[
-    const Body(),
+    const BaseMapPage(),
     const BaseMapPage(),
   ];
 
   @override
   void initState() {
     _determinePosition();
+
     super.initState();
   }
 
@@ -78,7 +96,9 @@ class HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       body: Stack(children: [
         Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: _selectedIndex == 0
+              ? Body(showBottomNavigation, hideBottomNavigation)
+              : const BaseMapPage(),
         ),
         Visibility(
           child: GestureDetector(
@@ -131,7 +151,11 @@ class HomeScreenState extends State<HomeScreen> {
             showUnselectedLabels: false,
             onTap: _onItemTapped,
           ),
-          visible: _selectedIndex == 0 ? true : false,
+          visible: _selectedIndex == 0
+              ? visible
+                  ? true
+                  : false
+              : false,
         ),
       ]),
     );
