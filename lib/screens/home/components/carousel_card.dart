@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/details/details_screen.dart';
 import 'package:winepedia/screens/home/components/asset_player_widget.dart';
+import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:winepedia/constants.dart';
 
 import '../../../constants.dart';
 
 class CarouselCard extends StatelessWidget {
+  final int currentIndex;
+  final int posterIndex;
   final WineBar wineBar;
-  const CarouselCard({Key? key, required this.wineBar}) : super(key: key);
+  const CarouselCard(this.currentIndex, this.posterIndex, this.wineBar,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +40,7 @@ class CarouselCard extends StatelessWidget {
                                     colors: [Colors.white, Colors.black])
                                 .createShader(bounds);
                           },
-                          child: AssetPlayerWidget(
+                          child: AssetPlayerWidget(currentIndex, posterIndex,
                               wineBar.posterVideo, wineBar.posterImage),
                         ),
                         Column(
@@ -125,11 +131,23 @@ class GoToDeatilsPage extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0x4DFFFFFF),
             borderRadius: BorderRadius.circular(17.5)),
-        child: Text(
-          "자세히 보기 >",
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.headline5!.copyWith(
-              fontWeight: FontWeight.normal, fontSize: 17, color: Colors.white),
+        child: RichText(
+          text: const TextSpan(
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 17,
+                color: Colors.white),
+            children: [
+              TextSpan(
+                text: "자세히 보기 ",
+              ),
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Icon(SFSymbols.chevron_right,
+                    color: Colors.white, size: 20),
+              ),
+            ],
+          ),
         ));
   }
 }

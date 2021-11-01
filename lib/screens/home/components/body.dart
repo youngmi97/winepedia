@@ -4,6 +4,9 @@ import 'package:winepedia/constants.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/home/components/carousel_card.dart';
 import '../../../constants.dart';
+import 'dart:math' as math;
+import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Body extends StatefulWidget {
   Function hideBottomNavigation;
@@ -20,12 +23,14 @@ class BodyState extends State<Body> {
     Size size = MediaQuery.of(context).size;
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
-        print(scrollInfo.metrics.pixels);
+        //print(scrollInfo.metrics.maxScrollExtent);
         if (scrollInfo.metrics.pixels <= 0) {
           widget.showBottomNavigation();
           return true;
-        } else {
+        } else if (scrollInfo.metrics.maxScrollExtent <= 269.3) {
           widget.hideBottomNavigation();
+          return false;
+        } else {
           return false;
         }
       },
@@ -38,15 +43,22 @@ class BodyState extends State<Body> {
               //reverse: true,
               controller: controller,
               //physics: ClampingScrollPhysics(),
-              child: Container(
+              child: SizedBox(
                 height: size.height * 1.2,
                 child: Scaffold(
                     body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
+                  children: <Widget>[
                     AddressBar(),
                     Heading(),
                     Carousel(),
+                    GestureDetector(
+                      onTap: () {
+                        _launchURL();
+                      },
+                      child: AddNewWineBar(),
+                    )
+                    //AddNewWineBar(),
                   ],
                 )),
               ),
@@ -64,7 +76,7 @@ class AddressBar extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
         width: size.width,
-        height: 111,
+        height: size.height * 0.15,
         color: const Color.fromRGBO(76, 3, 43, 1),
         alignment: Alignment.bottomCenter,
         padding: const EdgeInsets.only(bottom: 14),
@@ -131,56 +143,110 @@ class _CarouselState extends State<Carousel> {
             CarouselPage(initialPage, 3),
           ],
         ));
-
-    // @override
-    // void initState() {
-    //   //so that we can small portion shown on left and right side
-    //   super.initState();
-    //   _pageController =
-    //       PageController(viewportFraction: 0.75, initialPage: initialPage);
-    // }
-
-    // @override
-    // void dispose() {
-    //   super.dispose();
-    //   _pageController.dispose();
-    // }
-    // Padding(
-    //     padding: const EdgeInsets.symmetric(
-    //       vertical: kDefaultPadding,
-    //     ),
-    //     child: AspectRatio(
-    //         aspectRatio: 0.75,
-    //         child: PageView.builder(
-    //             onPageChanged: (index) {
-    //               setState(() {
-    //                 initialPage = index;
-    //               });
-    //             },
-    //             controller: _pageController,
-    //             itemCount: wineBars.length,
-    //             physics: const ClampingScrollPhysics(),
-    //             itemBuilder: (context, index) => buildSlider(index))));
   }
+}
 
-//   Widget buildSlider(int index) => (
-//           animation: _pageController,
-//          builder: (context, child) {
-//         double value = 1;
-//         if (_pageController.position.haveDimensions) {
-//           value = index - _pageController.page!;
-//           value = (value * 0.038).clamp(-1, 1);
-//         }
-//         return AnimatedOpacity(
-//           duration: const Duration(milliseconds: 350),
-//           opacity: initialPage == index ? 1 : 0.4,
-//           child: Transform.scale(
-//             scale: initialPage == index ? 1 : 1,
-//             child: CarouselCard(wineBar: wineBars[index]),
-//           ),
-//         );
-//       });
-// }
+class AddNewWineBar extends StatelessWidget {
+  const AddNewWineBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+        width: size.width - 2 * kDefaultPadding,
+        height: size.height * 0.11,
+        margin: const EdgeInsets.only(top: 40, left: kDefaultPadding),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          border: Border.all(
+            color: const Color(0xFFE8E9EB),
+            width: 1,
+          ),
+          color: const Color(0xFFFFFFFF),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x0D000000),
+              spreadRadius: 2,
+              blurRadius: 16,
+            ),
+          ],
+        ),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+          Container(
+              height: 60,
+              width: 60,
+              margin: const EdgeInsets.only(left: kDefaultPadding),
+              decoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.only(
+                  //   topLeft: Radius.circular(12),
+                  //   bottomLeft: Radius.circular(12),
+                  // ),
+                  image: DecorationImage(
+                      fit: BoxFit.fitHeight,
+                      alignment: Alignment.centerLeft,
+                      image: AssetImage("assets/images/WineportLogo.jpg")))),
+          Container(
+              margin: const EdgeInsets.only(left: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 24,
+                    width: 223,
+                    margin: const EdgeInsets.only(top: 8),
+                    child: RichText(
+                      textAlign: TextAlign.start,
+                      text: const TextSpan(
+                        // Note: Styles for TextSpans must be explicitly defined.
+                        // Child text spans will inherit styles from parent
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: '내가 즐겨찾는 '),
+                          TextSpan(
+                              text: '와인바',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: '가 없나요?'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                      height: 24,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                height: 24,
+                                width: 223,
+                                child: RichText(
+                                  text: const TextSpan(
+                                    style: TextStyle(
+                                        color: const Color(0xFF4C032B),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15),
+                                    children: [
+                                      TextSpan(
+                                        text: "나만 알고있는 와인바 추천하기 ",
+                                      ),
+                                      WidgetSpan(
+                                        alignment: PlaceholderAlignment.top,
+                                        child: Icon(SFSymbols.chevron_right,
+                                            color: Color(0xFF4C032B), size: 15),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ])),
+                ],
+              )),
+        ]));
+  }
 }
 
 class CarouselPage extends StatelessWidget {
@@ -195,8 +261,17 @@ class CarouselPage extends StatelessWidget {
       opacity: initialPage == index ? 1 : 0.4,
       // child: Transform.scale(
       //   scale: initialPage == index ? 1 : 1,
-      child: CarouselCard(wineBar: wineBars[index]),
+      child: CarouselCard(initialPage, index, wineBars[index]),
       //),
     );
+  }
+}
+
+_launchURL() async {
+  const url = 'https://flutter.io';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

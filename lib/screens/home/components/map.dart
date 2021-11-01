@@ -254,55 +254,6 @@ class _BaseMapPageState extends State<BaseMapPage> {
     final controller = await _controller.future;
     controller.moveCamera(CameraUpdate.scrollTo(position));
   }
-
-  //scroll screen components
-
-  /// 지도 유형 선택시
-  // void _onTapTypeSelector(MapType type) async {
-  //   if (_mapType != type) {
-  //     setState(() {
-  //       _mapType = type;
-  //     });
-  //   }
-  // }
-
-  /// my location button
-  // void _onTapLocation() async {
-  //   final controller = await _controller.future;
-  //   controller.setLocationTrackingMode(LocationTrackingMode.Follow);
-  // }
-
-  // void _onCameraChange(
-  //     LatLng latLng, CameraChangeReason reason, bool isAnimated) {
-  //   print('카메라 움직임 >>> 위치 : ${latLng.latitude}, ${latLng.longitude}'
-  //       '\n원인: $reason'
-  //       '\n에니메이션 여부: $isAnimated');
-  // }
-
-  // void _onCameraIdle() {
-  //   print('카메라 움직임 멈춤');
-  // }
-
-  /// 지도 스냅샷
-  // void _onTapTakeSnapShot() async {
-  //   final controller = await _controller.future;
-  //   controller.takeSnapshot((path) {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return AlertDialog(
-  //             contentPadding: EdgeInsets.zero,
-  //             content: path != null
-  //                 ? Image.file(
-  //                     File(path),
-  //                   )
-  //                 : Text('path is null!'),
-  //             titlePadding: EdgeInsets.zero,
-  //           );
-  //         });
-  //   });
-  // }
-
 }
 
 class CarouselPage extends StatelessWidget {
