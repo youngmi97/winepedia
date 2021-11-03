@@ -49,14 +49,19 @@ class ItemContext {
   String name;
   String phoneNumber;
   String address;
+  String sAddr;
   ItemContext(
-      {required this.name, required this.phoneNumber, required this.address});
+      {required this.name,
+      required this.phoneNumber,
+      required this.address,
+      required this.sAddr});
 
   factory ItemContext.fromJson(Map<String, dynamic> parsedJson) {
     return ItemContext(
       name: parsedJson['NAME'],
       phoneNumber: parsedJson['PHONE'],
       address: parsedJson['ADDRESS'],
+      sAddr: parsedJson['SADDR'],
     );
   }
 }
@@ -72,7 +77,7 @@ Future<ItemContext> fetchData(String Id) async {
     // print('데이터 수신' + response.contentLength.toString() + "byte");
     // print(response.body);
     // print(parsePhotos((response.body)).name);
-    // print(parsePhotos((response.body)).phoneNumber);
+    print(parsePhotos((response.body)).phoneNumber);
     // print(parsePhotos((response.body)).address);
     return parsePhotos(response.body);
   } else {
@@ -344,7 +349,7 @@ class CarouselPageState extends State<CarouselPage> {
   void initState() {
     fetchData("2021000" + (widget.index + 1).toString()).then((value) => {
           barContent = value,
-          //print(barContent?.address),
+          //print(barContent?.phoneNumber),
           setState(() {})
         });
 

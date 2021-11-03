@@ -53,6 +53,7 @@ class Body extends StatelessWidget {
               ),
               child: GestureDetector(
                   onTap: () {
+                    print(phoneNumber);
                     launch("tel:$phoneNumber");
                   },
                   child: Container(

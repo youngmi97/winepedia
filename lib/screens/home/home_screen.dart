@@ -4,35 +4,6 @@ import 'package:winepedia/screens/home/components/map.dart';
 import 'package:winepedia/constants.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-// class WineBarr {
-//   List<APIBody> body;
-
-//   WineBarr({required this.body});
-
-//   factory WineBarr.fromJson(Map<String, dynamic> json) => WineBarr(
-//       body: List<APIBody>.from(json["Count"]?.map((x) => APIBody.fromJson(x))));
-
-//   Map<String, dynamic> toJson() =>
-//       {"Body": List<dynamic>.from(body.map((x) => x.toJson()))};
-// }
-
-// class APIBody {
-//   int Count;
-
-//   APIBody({
-//     required this.Count,
-//   });
-
-//   factory APIBody.fromJson(Map<String, dynamic> json) => APIBody(
-//         Count: json["Count"],
-//       );
-//   Map<String, dynamic> toJson() => {
-//         "Count": Count,
-//       };
-// }
 
 Future<Position> _determinePosition() async {
   // When we reach here, permissions are granted and we can
@@ -105,11 +76,6 @@ class HomeScreenState extends State<HomeScreen> {
       _selectedIndex = _selectedIndex == 0 ? 1 : 0;
     });
   }
-
-  final List<Widget> _widgetOptions = <Widget>[
-    const BaseMapPage(),
-    const BaseMapPage(),
-  ];
 
   @override
   void initState() {
