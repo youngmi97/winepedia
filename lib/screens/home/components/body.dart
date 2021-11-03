@@ -4,9 +4,84 @@ import 'package:winepedia/constants.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/home/components/carousel_card.dart';
 import '../../../constants.dart';
-import 'dart:math' as math;
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+ItemContext parsePhotos(String responseBody) {
+  final parsed = jsonDecode(responseBody);
+
+  APIbody winebarList = APIbody.fromJson(parsed);
+  //print(winebarList.body);
+  Items itemList = Items.fromJson(winebarList.body);
+  //print(itemList.items[0]);
+  ItemContext itemContent = ItemContext.fromJson(itemList.items[0]);
+  //print(ItemContent.name);
+  return itemContent;
+}
+
+class APIbody {
+  Map<String, dynamic> body;
+
+  APIbody({required this.body});
+
+  factory APIbody.fromJson(Map<String, dynamic> parsedJson) {
+    return APIbody(
+      body: parsedJson['body'],
+    );
+  }
+}
+
+class Items {
+  List<dynamic> items;
+
+  Items({required this.items});
+
+  factory Items.fromJson(Map<String, dynamic> parsedJson) {
+    return Items(
+      items: parsedJson['Items'],
+    );
+  }
+}
+
+class ItemContext {
+  String name;
+  String phoneNumber;
+  String address;
+  ItemContext(
+      {required this.name, required this.phoneNumber, required this.address});
+
+  factory ItemContext.fromJson(Map<String, dynamic> parsedJson) {
+    return ItemContext(
+      name: parsedJson['NAME'],
+      phoneNumber: parsedJson['PHONE'],
+      address: parsedJson['ADDRESS'],
+    );
+  }
+}
+
+Future<ItemContext> fetchData(String Id) async {
+  final response = await http.get(Uri.parse(
+      'https://uidlxhemcj.execute-api.ap-northeast-2.amazonaws.com/dev/search-bar?id=$Id'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+
+    // print('데이터 수신' + response.contentLength.toString() + "byte");
+    // print(response.body);
+    // print(parsePhotos((response.body)).name);
+    // print(parsePhotos((response.body)).phoneNumber);
+    // print(parsePhotos((response.body)).address);
+    return parsePhotos(response.body);
+  } else {
+    //print(response.body);
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
 
 class Body extends StatefulWidget {
   Function hideBottomNavigation;
@@ -18,6 +93,9 @@ class Body extends StatefulWidget {
 }
 
 class BodyState extends State<Body> {
+  late ItemContext barContent;
+  bool loaded = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -141,6 +219,7 @@ class _CarouselState extends State<Carousel> {
             CarouselPage(initialPage, 1),
             CarouselPage(initialPage, 2),
             CarouselPage(initialPage, 3),
+            CarouselPage(initialPage, 4),
           ],
         ));
   }
@@ -249,19 +328,38 @@ class AddNewWineBar extends StatelessWidget {
   }
 }
 
-class CarouselPage extends StatelessWidget {
+class CarouselPage extends StatefulWidget {
   const CarouselPage(this.initialPage, this.index, {Key? key})
       : super(key: key);
   final int initialPage;
   final int index;
+
+  @override
+  CarouselPageState createState() => CarouselPageState();
+}
+
+class CarouselPageState extends State<CarouselPage> {
+  ItemContext? barContent;
+  @override
+  void initState() {
+    fetchData("2021000" + (widget.index + 1).toString()).then((value) => {
+          barContent = value,
+          //print(barContent?.address),
+          setState(() {})
+        });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 350),
-      opacity: initialPage == index ? 1 : 0.4,
+      opacity: widget.initialPage == widget.index ? 1 : 0.4,
       // child: Transform.scale(
       //   scale: initialPage == index ? 1 : 1,
-      child: CarouselCard(initialPage, index, wineBars[index]),
+      child: CarouselCard(widget.initialPage, widget.index, barContent?.name,
+          barContent?.phoneNumber, barContent?.address, wineBars[widget.index]),
       //),
     );
   }

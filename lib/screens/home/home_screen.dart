@@ -5,23 +5,34 @@ import 'package:winepedia/constants.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-Future<String> fetchData() async {
-  final response = await http.get(Uri.parse(
-      'https://uidlxhemcj.execute-api.ap-northeast-2.amazonaws.com/dev/search-bar?id=20210001'));
+// class WineBarr {
+//   List<APIBody> body;
 
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    print(response.body);
-    return response.body;
-  } else {
-    print(response.body);
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+//   WineBarr({required this.body});
+
+//   factory WineBarr.fromJson(Map<String, dynamic> json) => WineBarr(
+//       body: List<APIBody>.from(json["Count"]?.map((x) => APIBody.fromJson(x))));
+
+//   Map<String, dynamic> toJson() =>
+//       {"Body": List<dynamic>.from(body.map((x) => x.toJson()))};
+// }
+
+// class APIBody {
+//   int Count;
+
+//   APIBody({
+//     required this.Count,
+//   });
+
+//   factory APIBody.fromJson(Map<String, dynamic> json) => APIBody(
+//         Count: json["Count"],
+//       );
+//   Map<String, dynamic> toJson() => {
+//         "Count": Count,
+//       };
+// }
 
 Future<Position> _determinePosition() async {
   // When we reach here, permissions are granted and we can
@@ -84,7 +95,6 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   void _onItemTapped(int index) async {
-    await fetchData();
     setState(() {
       _selectedIndex = index;
     });

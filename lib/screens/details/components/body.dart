@@ -6,8 +6,10 @@ import 'package:winepedia/screens/details/components/scroll_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Body extends StatelessWidget {
+  final String? phoneNumber;
   final WineBar wineBar;
-  const Body({Key? key, required this.wineBar}) : super(key: key);
+  const Body(this.phoneNumber, {Key? key, required this.wineBar})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class Body extends StatelessWidget {
               ),
               child: GestureDetector(
                   onTap: () {
-                    launch("tel:01029742228");
+                    launch("tel:$phoneNumber");
                   },
                   child: Container(
                       decoration: BoxDecoration(

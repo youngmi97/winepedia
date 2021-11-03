@@ -11,8 +11,12 @@ import '../../../constants.dart';
 class CarouselCard extends StatelessWidget {
   final int currentIndex;
   final int posterIndex;
+  final String? barName;
+  final String? phoneNumber;
+  final String? address;
   final WineBar wineBar;
-  const CarouselCard(this.currentIndex, this.posterIndex, this.wineBar,
+  CarouselCard(this.currentIndex, this.posterIndex, this.barName,
+      this.phoneNumber, this.address, this.wineBar,
       {Key? key})
       : super(key: key);
 
@@ -22,7 +26,8 @@ class CarouselCard extends StatelessWidget {
         closedElevation: 0,
         openElevation: 0,
         closedBuilder: (context, action) => buildCarouselCard(context),
-        openBuilder: (context, action) => DetailsScreen(wineBar: wineBar));
+        openBuilder: (context, action) =>
+            DetailsScreen(phoneNumber, wineBar: wineBar));
   }
 
   Column buildCarouselCard(BuildContext context) => Column(
@@ -43,14 +48,16 @@ class CarouselCard extends StatelessWidget {
                           child: AssetPlayerWidget(currentIndex, posterIndex,
                               wineBar.posterVideo, wineBar.posterImage),
                         ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Subheading(),
-                              Description(),
-                              GoToDeatilsPage()
-                            ])
+                        barName == null
+                            ? const SizedBox(width: 1)
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                    Subheading(barName, address),
+                                    Description(),
+                                    GoToDeatilsPage()
+                                  ])
                       ]),
                 )
               : Expanded(
@@ -66,17 +73,21 @@ class CarouselCard extends StatelessWidget {
 }
 
 class Subheading extends StatelessWidget {
-  const Subheading({Key? key}) : super(key: key);
+  final String? barName;
+  final String? address;
+  const Subheading(this.barName, this.address, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
             height: 20,
             margin: const EdgeInsets.only(left: kDefaultPadding),
             child: Text(
-              "가르고뜨",
+              '$barName',
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: Colors.white,
@@ -87,7 +98,7 @@ class Subheading extends StatelessWidget {
             height: 20,
             margin: const EdgeInsets.only(left: 12),
             child: Text(
-              "서울 / 서초구",
+              "$address",
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.normal,

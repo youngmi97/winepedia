@@ -268,11 +268,11 @@ class CarouselPage extends StatelessWidget {
         onTap: () {
           //print(index - 1);
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailsScreen(wineBar: wineBars[index])),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => DetailsScreen(wineBar: wineBars[index])),
+          // );
         },
         child: Container(
             width: size.width - 3 * kDefaultPadding,

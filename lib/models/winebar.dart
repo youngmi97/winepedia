@@ -50,6 +50,14 @@ List<WineBar> wineBars = [
     description: plotText,
     wines: [],
   ),
+  WineBar(
+    id: 5,
+    name: "Bloodshot",
+    posterVideo: "assets/heewine.mp4",
+    posterImage: "assets/images/bar_template.jpg",
+    description: plotText,
+    wines: [],
+  ),
 ];
 
 String plotText = "서초구에 위치한 혼술하기 좋은 와인바";
