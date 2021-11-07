@@ -3,6 +3,7 @@ import 'package:winepedia/screens/home/components/body.dart';
 import 'package:winepedia/screens/home/components/map.dart';
 import 'package:winepedia/constants.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
 
 Future<Position> _determinePosition() async {
   // When we reach here, permissions are granted and we can
@@ -49,7 +50,22 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  void _onItemTapped(int index) {
+  bool visible = true;
+  String abc = "bb";
+
+  showBottomNavigation() {
+    setState(() {
+      visible = true;
+    });
+  }
+
+  hideBottomNavigation() {
+    setState(() {
+      visible = false;
+    });
+  }
+
+  void _onItemTapped(int index) async {
     setState(() {
       _selectedIndex = index;
     });
@@ -61,79 +77,88 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const Body(),
-    const BaseMapPage(),
-  ];
-
   @override
   void initState() {
     _determinePosition();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(children: [
-        Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        Visibility(
-          child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                _changeTab();
-              },
-              child: Container(
-                  width: 48,
-                  height: 48,
-                  margin: const EdgeInsets.only(top: 64, left: kDefaultPadding),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x40000000),
-                        spreadRadius: 1,
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.keyboard_arrow_left,
-                    size: 36,
-                  ))),
-          visible: _selectedIndex == 0 ? false : true,
-        )
-      ]),
-      bottomNavigationBar: Stack(children: [
-        Visibility(
-          child: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.red,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: 'Business',
-                backgroundColor: Colors.green,
-              ),
-            ],
-            iconSize: 25,
-            currentIndex: _selectedIndex,
-            backgroundColor: const Color(0xFFFFFFFF),
-            selectedItemColor: Colors.black,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            onTap: _onItemTapped,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      // Use [SystemUiOverlayStyle.light] for white status bar
+      // or [SystemUiOverlayStyle.dark] for black status bar
+      // https://stackoverflow.com/a/58132007/1321917
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Stack(children: [
+          Center(
+            child: _selectedIndex == 0
+                ? Body(showBottomNavigation, hideBottomNavigation)
+                : const BaseMapPage(),
           ),
-          visible: _selectedIndex == 0 ? true : false,
-        ),
-      ]),
+          Visibility(
+            child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  _changeTab();
+                },
+                child: Container(
+                    width: 48,
+                    height: 48,
+                    margin:
+                        const EdgeInsets.only(top: 64, left: kDefaultPadding),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x40000000),
+                          spreadRadius: 1,
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.keyboard_arrow_left,
+                      size: 36,
+                    ))),
+            visible: _selectedIndex == 0 ? false : true,
+          )
+        ]),
+        bottomNavigationBar: Stack(children: [
+          Visibility(
+            child: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: 'Home',
+                  backgroundColor: Colors.red,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.map),
+                  label: 'Business',
+                  backgroundColor: Colors.green,
+                ),
+              ],
+              iconSize: 25,
+              currentIndex: _selectedIndex,
+              backgroundColor: const Color(0xFFFFFFFF),
+              selectedItemColor: Colors.black,
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              onTap: _onItemTapped,
+            ),
+            visible: _selectedIndex == 0
+                ? visible
+                    ? true
+                    : false
+                : false,
+          ),
+        ]),
+      ),
     );
   }
 }

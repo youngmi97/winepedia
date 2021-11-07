@@ -6,6 +6,8 @@ import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:winepedia/screens/details/details_screen.dart';
 import 'package:winepedia/models/winebar.dart';
+import 'package:winepedia/screens/home/components/body.dart';
+
 import 'package:geolocator/geolocator.dart';
 
 Future<Position> _determinePosition() async {
@@ -111,14 +113,8 @@ class _BaseMapPageState extends State<BaseMapPage> {
             initLocationTrackingMode: _trackingMode,
             //locationButtonEnable: true,
             indoorEnable: true,
-            onMapTap: _onMapTap,
-            onMapLongTap: _onMapLongTap,
-            onMapDoubleTap: _onMapDoubleTap,
-            onMapTwoFingerTap: _onMapTwoFingerTap,
-            onSymbolTap: _onSymbolTap,
           ),
           GestureDetector(
-              behavior: HitTestBehavior.translucent,
               onTap: () {
                 _determinePosition().then((value) => {
                       //print(value.latitude),
@@ -189,51 +185,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
   void _onMapCreated(NaverMapController controller) {
     _controller.complete(controller);
     //print("map crteate");
-    controller.moveCamera(CameraUpdate.scrollTo(initialPos));
-  }
-
-  _onMapTap(LatLng position) async {
-    scaffoldKey.currentState?.showSnackBar(SnackBar(
-      content:
-          Text('[onTap] lat: ${position.latitude}, lon: ${position.longitude}'),
-      duration: const Duration(milliseconds: 500),
-      backgroundColor: Colors.black,
-    ));
-  }
-
-  _onMapLongTap(LatLng position) {
-    scaffoldKey.currentState?.showSnackBar(SnackBar(
-      content: Text(
-          '[onLongTap] lat: ${position.latitude}, lon: ${position.longitude}'),
-      duration: const Duration(milliseconds: 500),
-      backgroundColor: Colors.black,
-    ));
-  }
-
-  _onMapDoubleTap(LatLng position) {
-    scaffoldKey.currentState?.showSnackBar(SnackBar(
-      content: Text(
-          '[onDoubleTap] lat: ${position.latitude}, lon: ${position.longitude}'),
-      duration: const Duration(milliseconds: 500),
-      backgroundColor: Colors.black,
-    ));
-  }
-
-  _onMapTwoFingerTap(LatLng position) {
-    scaffoldKey.currentState?.showSnackBar(SnackBar(
-      content: Text(
-          '[onTwoFingerTap] lat: ${position.latitude}, lon: ${position.longitude}'),
-      duration: const Duration(milliseconds: 500),
-      backgroundColor: Colors.black,
-    ));
-  }
-
-  _onSymbolTap(LatLng position, String caption) {
-    scaffoldKey.currentState?.showSnackBar(SnackBar(
-      content: Text(
-          '[onSymbolTap] caption: $caption, lat: ${position.latitude}, lon: ${position.longitude}'),
-      duration: const Duration(milliseconds: 500),
-      backgroundColor: Colors.black,
+    controller.moveCamera(CameraUpdate.fitBounds(
+      LatLngBounds.fromLatLngList(_coordinates),
+      padding: 48,
     ));
   }
 
@@ -252,73 +206,40 @@ class _BaseMapPageState extends State<BaseMapPage> {
     final controller = await _controller.future;
     controller.moveCamera(CameraUpdate.scrollTo(position));
   }
-
-  //scroll screen components
-
-  /// 지도 유형 선택시
-  // void _onTapTypeSelector(MapType type) async {
-  //   if (_mapType != type) {
-  //     setState(() {
-  //       _mapType = type;
-  //     });
-  //   }
-  // }
-
-  /// my location button
-  // void _onTapLocation() async {
-  //   final controller = await _controller.future;
-  //   controller.setLocationTrackingMode(LocationTrackingMode.Follow);
-  // }
-
-  // void _onCameraChange(
-  //     LatLng latLng, CameraChangeReason reason, bool isAnimated) {
-  //   print('카메라 움직임 >>> 위치 : ${latLng.latitude}, ${latLng.longitude}'
-  //       '\n원인: $reason'
-  //       '\n에니메이션 여부: $isAnimated');
-  // }
-
-  // void _onCameraIdle() {
-  //   print('카메라 움직임 멈춤');
-  // }
-
-  /// 지도 스냅샷
-  // void _onTapTakeSnapShot() async {
-  //   final controller = await _controller.future;
-  //   controller.takeSnapshot((path) {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) {
-  //           return AlertDialog(
-  //             contentPadding: EdgeInsets.zero,
-  //             content: path != null
-  //                 ? Image.file(
-  //                     File(path),
-  //                   )
-  //                 : Text('path is null!'),
-  //             titlePadding: EdgeInsets.zero,
-  //           );
-  //         });
-  //   });
-  // }
-
 }
 
-class CarouselPage extends StatelessWidget {
-  const CarouselPage(this.index, {Key? key}) : super(key: key);
+class CarouselPage extends StatefulWidget {
   final int index;
+  const CarouselPage(this.index, {Key? key}) : super(key: key);
+
+  @override
+  CarouselPageState createState() => CarouselPageState();
+}
+
+class CarouselPageState extends State<CarouselPage> {
+  ItemContext? barContent;
+  @override
+  void initState() {
+    fetchData("2021000" + (widget.index + 1).toString()).then((value) => {
+          barContent = value,
+          //print(barContent?.phoneNumber),
+          setState(() {})
+        });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     //print(index);
-
     return GestureDetector(
         onTap: () {
-          print(index - 1);
-
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailsScreen(wineBar: wineBars[index])),
+                builder: (context) => DetailsScreen(barContent?.phoneNumber,
+                    wineBar: wineBars[widget.index])),
           );
         },
         child: Container(
@@ -343,47 +264,61 @@ class CarouselPage extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           image:
                               AssetImage("assets/images/bar_template.jpg")))),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 21,
-                      width: (size.width - 3 * kDefaultPadding) * 0.78 -
-                          kDefaultPadding,
-                      child: Text(
-                        "가르고뜨",
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 17),
-                      )),
-                  Container(
-                      height: 18,
-                      width: (size.width - 3 * kDefaultPadding) * 0.78 -
-                          kDefaultPadding,
-                      margin: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        "정상 영업중",
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            color: const Color(0xFF34C759),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15),
-                      )),
-                  Container(
-                      height: 38,
-                      width: (size.width - 3 * kDefaultPadding) * 0.78 -
-                          kDefaultPadding,
-                      margin: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        "서울특별시 서초구 아크로텔\n효령료77길 34 116호",
-                        textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15),
-                      )),
-                ],
-              ),
+              barContent?.name == null
+                  ? const SizedBox(width: 0.1)
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            height: 21,
+                            width: (size.width - 3 * kDefaultPadding) * 0.78 -
+                                kDefaultPadding,
+                            child: Text(
+                              "${barContent?.name}",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 17),
+                            )),
+                        Container(
+                            height: 18,
+                            width: (size.width - 3 * kDefaultPadding) * 0.78 -
+                                kDefaultPadding,
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              "정상 영업중",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                      color: const Color(0xFF34C759),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15),
+                            )),
+                        Container(
+                            height: 38,
+                            width: (size.width - 3 * kDefaultPadding) * 0.78 -
+                                kDefaultPadding -
+                                50,
+                            margin: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              "${barContent?.sAddr}",
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15),
+                            )),
+                      ],
+                    ),
             ])));
   }
 }

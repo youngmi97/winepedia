@@ -3,12 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/details/details_screen.dart';
 import 'package:winepedia/screens/home/components/asset_player_widget.dart';
+import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:winepedia/constants.dart';
 
 import '../../../constants.dart';
 
 class CarouselCard extends StatelessWidget {
+  final int currentIndex;
+  final int posterIndex;
+  final String? barName;
+  final String? phoneNumber;
+  final String? address;
   final WineBar wineBar;
-  const CarouselCard({Key? key, required this.wineBar}) : super(key: key);
+  CarouselCard(this.currentIndex, this.posterIndex, this.barName,
+      this.phoneNumber, this.address, this.wineBar,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +26,8 @@ class CarouselCard extends StatelessWidget {
         closedElevation: 0,
         openElevation: 0,
         closedBuilder: (context, action) => buildCarouselCard(context),
-        openBuilder: (context, action) => DetailsScreen(wineBar: wineBar));
+        openBuilder: (context, action) =>
+            DetailsScreen(phoneNumber, wineBar: wineBar));
   }
 
   Column buildCarouselCard(BuildContext context) => Column(
@@ -34,17 +45,19 @@ class CarouselCard extends StatelessWidget {
                                     colors: [Colors.white, Colors.black])
                                 .createShader(bounds);
                           },
-                          child: AssetPlayerWidget(
+                          child: AssetPlayerWidget(currentIndex, posterIndex,
                               wineBar.posterVideo, wineBar.posterImage),
                         ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Subheading(),
-                              Description(),
-                              GoToDeatilsPage()
-                            ])
+                        barName == null
+                            ? const SizedBox(width: 1)
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                    Subheading(barName, address),
+                                    Description(),
+                                    GoToDeatilsPage()
+                                  ])
                       ]),
                 )
               : Expanded(
@@ -60,17 +73,21 @@ class CarouselCard extends StatelessWidget {
 }
 
 class Subheading extends StatelessWidget {
-  const Subheading({Key? key}) : super(key: key);
+  final String? barName;
+  final String? address;
+  const Subheading(this.barName, this.address, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
             height: 20,
             margin: const EdgeInsets.only(left: kDefaultPadding),
             child: Text(
-              "가르고뜨",
+              '$barName',
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: Colors.white,
@@ -81,7 +98,7 @@ class Subheading extends StatelessWidget {
             height: 20,
             margin: const EdgeInsets.only(left: 12),
             child: Text(
-              "서울 / 서초구",
+              "$address",
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.normal,
@@ -125,11 +142,23 @@ class GoToDeatilsPage extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0x4DFFFFFF),
             borderRadius: BorderRadius.circular(17.5)),
-        child: Text(
-          "자세히 보기 >",
-          textAlign: TextAlign.start,
-          style: Theme.of(context).textTheme.headline5!.copyWith(
-              fontWeight: FontWeight.normal, fontSize: 17, color: Colors.white),
+        child: RichText(
+          text: const TextSpan(
+            style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 17,
+                color: Colors.white),
+            children: [
+              TextSpan(
+                text: "자세히 보기 ",
+              ),
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Icon(SFSymbols.chevron_right,
+                    color: Colors.white, size: 20),
+              ),
+            ],
+          ),
         ));
   }
 }

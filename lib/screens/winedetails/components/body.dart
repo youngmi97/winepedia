@@ -45,7 +45,7 @@ class Body extends StatelessWidget {
                         indent: kDefaultPadding,
                         endIndent: kDefaultPadding,
                       ),
-                      const FoodPairing(),
+                      //const FoodPairing(),
                     ])
                   ]),
                 ),

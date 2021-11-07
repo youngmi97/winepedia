@@ -41,7 +41,18 @@ class WineCatalogue extends StatelessWidget {
                       )
                     ],
                   ),
-                  const WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TasteBar(
+                                "파미유 페랑", "라비에이유 페름루즈", "france")),
+                      );
+                    },
+                    child: const WineDisplayContainer(
+                        "마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
+                  )
                 ])));
   }
 }
