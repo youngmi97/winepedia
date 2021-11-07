@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
 
 import 'package:winepedia/models/winebar.dart';
+import 'package:winepedia/models/custom_class.dart';
+
 import 'package:winepedia/screens/details/components/scroll_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Body extends StatelessWidget {
-  final String? phoneNumber;
+  final ItemContext? barContent;
   final WineBar wineBar;
-  const Body(this.phoneNumber, {Key? key, required this.wineBar})
+  const Body(this.barContent, {Key? key, required this.wineBar})
       : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class Body extends StatelessWidget {
               ],
             ),
             //const SafeArea(child: BackButton()),
-            const ScrollScreen(),
+            ScrollScreen(barContent),
           ])),
       Positioned(
           bottom: 0,
@@ -53,8 +55,8 @@ class Body extends StatelessWidget {
               ),
               child: GestureDetector(
                   onTap: () {
-                    print(phoneNumber);
-                    launch("tel:$phoneNumber");
+                    print(barContent?.phoneNumber);
+                    launch("tel:${barContent?.phoneNumber}");
                   },
                   child: Container(
                       decoration: BoxDecoration(

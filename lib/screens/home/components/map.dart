@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:winepedia/screens/details/details_screen.dart';
 import 'package:winepedia/models/winebar.dart';
 import 'package:winepedia/screens/home/components/body.dart';
+import 'package:winepedia/models/custom_class.dart';
 
 import 'package:geolocator/geolocator.dart';
 
@@ -238,8 +239,8 @@ class CarouselPageState extends State<CarouselPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailsScreen(barContent?.phoneNumber,
-                    wineBar: wineBars[widget.index])),
+                builder: (context) =>
+                    DetailsScreen(barContent, wineBar: wineBars[widget.index])),
           );
         },
         child: Container(

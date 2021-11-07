@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
+import 'package:winepedia/models/custom_class.dart';
+
 import 'package:winepedia/screens/details/components/body.dart';
 import 'package:flutter/services.dart';
 
 class DetailsScreen extends StatelessWidget {
-  final String? phoneNumber;
+  final ItemContext? barContent;
   final WineBar wineBar;
-  const DetailsScreen(this.phoneNumber, {Key? key, required this.wineBar})
+  const DetailsScreen(this.barContent, {Key? key, required this.wineBar})
       : super(key: key);
 
   @override
@@ -17,7 +19,7 @@ class DetailsScreen extends StatelessWidget {
       // https://stackoverflow.com/a/58132007/1321917
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        body: Body(phoneNumber, wineBar: wineBar),
+        body: Body(barContent, wineBar: wineBar),
       ),
     );
   }

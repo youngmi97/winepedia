@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:winepedia/constants.dart';
 import 'package:winepedia/models/winebar.dart';
+import 'package:winepedia/models/custom_class.dart';
 import 'package:winepedia/screens/home/components/carousel_card.dart';
 import '../../../constants.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
@@ -19,51 +20,6 @@ ItemContext parsePhotos(String responseBody) {
   ItemContext itemContent = ItemContext.fromJson(itemList.items[0]);
   //print(ItemContent.name);
   return itemContent;
-}
-
-class APIbody {
-  Map<String, dynamic> body;
-
-  APIbody({required this.body});
-
-  factory APIbody.fromJson(Map<String, dynamic> parsedJson) {
-    return APIbody(
-      body: parsedJson['body'],
-    );
-  }
-}
-
-class Items {
-  List<dynamic> items;
-
-  Items({required this.items});
-
-  factory Items.fromJson(Map<String, dynamic> parsedJson) {
-    return Items(
-      items: parsedJson['Items'],
-    );
-  }
-}
-
-class ItemContext {
-  String name;
-  String phoneNumber;
-  String address;
-  String sAddr;
-  ItemContext(
-      {required this.name,
-      required this.phoneNumber,
-      required this.address,
-      required this.sAddr});
-
-  factory ItemContext.fromJson(Map<String, dynamic> parsedJson) {
-    return ItemContext(
-      name: parsedJson['NAME'],
-      phoneNumber: parsedJson['PHONE'],
-      address: parsedJson['ADDRESS'],
-      sAddr: parsedJson['SADDR'],
-    );
-  }
 }
 
 Future<ItemContext> fetchData(String Id) async {
@@ -363,8 +319,8 @@ class CarouselPageState extends State<CarouselPage> {
       opacity: widget.initialPage == widget.index ? 1 : 0.4,
       // child: Transform.scale(
       //   scale: initialPage == index ? 1 : 1,
-      child: CarouselCard(widget.initialPage, widget.index, barContent?.name,
-          barContent?.phoneNumber, barContent?.address, wineBars[widget.index]),
+      child: CarouselCard(
+          widget.initialPage, widget.index, barContent, wineBars[widget.index]),
       //),
     );
   }

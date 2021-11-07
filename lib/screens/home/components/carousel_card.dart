@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:winepedia/models/winebar.dart';
+import 'package:winepedia/models/custom_class.dart';
 import 'package:winepedia/screens/details/details_screen.dart';
 import 'package:winepedia/screens/home/components/asset_player_widget.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
@@ -11,12 +12,10 @@ import '../../../constants.dart';
 class CarouselCard extends StatelessWidget {
   final int currentIndex;
   final int posterIndex;
-  final String? barName;
-  final String? phoneNumber;
-  final String? address;
+  final ItemContext? barContent;
   final WineBar wineBar;
-  CarouselCard(this.currentIndex, this.posterIndex, this.barName,
-      this.phoneNumber, this.address, this.wineBar,
+  CarouselCard(
+      this.currentIndex, this.posterIndex, this.barContent, this.wineBar,
       {Key? key})
       : super(key: key);
 
@@ -27,7 +26,7 @@ class CarouselCard extends StatelessWidget {
         openElevation: 0,
         closedBuilder: (context, action) => buildCarouselCard(context),
         openBuilder: (context, action) =>
-            DetailsScreen(phoneNumber, wineBar: wineBar));
+            DetailsScreen(barContent, wineBar: wineBar));
   }
 
   Column buildCarouselCard(BuildContext context) => Column(
@@ -48,14 +47,15 @@ class CarouselCard extends StatelessWidget {
                           child: AssetPlayerWidget(currentIndex, posterIndex,
                               wineBar.posterVideo, wineBar.posterImage),
                         ),
-                        barName == null
+                        barContent?.name == null
                             ? const SizedBox(width: 1)
                             : Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                    Subheading(barName, address),
-                                    Description(),
+                                    Subheading(
+                                        barContent?.name, barContent?.address),
+                                    Description(barContent?.description),
                                     GoToDeatilsPage()
                                   ])
                       ]),
@@ -111,7 +111,8 @@ class Subheading extends StatelessWidget {
 }
 
 class Description extends StatelessWidget {
-  const Description({Key? key}) : super(key: key);
+  final String? description;
+  const Description(this.description, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +123,7 @@ class Description extends StatelessWidget {
         ),
         width: 350,
         child: Text(
-          "서초구에 위치한 혼술하기 좋은 와인바",
+          "$description",
           textAlign: TextAlign.start,
           style: Theme.of(context).textTheme.headline5!.copyWith(
               color: Colors.white, fontWeight: FontWeight.w400, fontSize: 15),

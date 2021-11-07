@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:winepedia/constants.dart';
+import 'package:winepedia/models/custom_class.dart';
+
 import 'package:winepedia/screens/details/components/wine_catalogue.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScrollScreen extends StatefulWidget {
-  const ScrollScreen({Key? key}) : super(key: key);
+  final ItemContext? barContent;
+  const ScrollScreen(this.barContent, {Key? key}) : super(key: key);
   @override
   ScrollScreenState createState() => ScrollScreenState();
 }
@@ -52,7 +56,7 @@ class ScrollScreenState extends State<ScrollScreen> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(24),
                                   topRight: Radius.circular(24)))),
-                      const ScrollScreenStart(),
+                      ScrollScreenStart(widget.barContent),
                     ]),
                   ),
                 );
@@ -97,8 +101,8 @@ class ScrollScreenState extends State<ScrollScreen> {
                                   BorderRadius.all(Radius.circular(999))),
                         )
                       ]),
-                      const Subheading(),
-                      const Description(),
+                      Subheading(widget.barContent),
+                      Description(widget.barContent?.description),
                     ]))
               ]),
               visible: visibility),
@@ -107,12 +111,12 @@ class ScrollScreenState extends State<ScrollScreen> {
 }
 
 class ScrollScreenStart extends StatelessWidget {
-  const ScrollScreenStart({Key? key}) : super(key: key);
+  final ItemContext? barContent;
+  const ScrollScreenStart(this.barContent, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String addr = "서울 서초구 효령로77길 34 아크로텔 116호";
     return Column(children: <Widget>[
       Stack(children: [
         const SizedBox(height: 36),
@@ -125,17 +129,17 @@ class ScrollScreenStart extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(999))),
         )
       ]),
-      const Subheading(),
-      const Description(),
+      Subheading(barContent),
+      Description(barContent?.description),
       const Divider(
         height: 56,
         thickness: 1,
         indent: kDefaultPadding,
         endIndent: kDefaultPadding,
       ),
-      WineBarAddress(addr),
+      WineBarAddress(barContent?.sAddr),
       const WineBarOpen(),
-      const WineBarInsta(),
+      WineBarInsta(barContent?.instaAddr),
       const Divider(
         height: 56,
         thickness: 1,
@@ -198,8 +202,8 @@ class ScrollScreenStart extends StatelessWidget {
 }
 
 class WineBarAddress extends StatelessWidget {
+  final String? addr;
   const WineBarAddress(this.addr, {Key? key}) : super(key: key);
-  final String addr;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -213,7 +217,7 @@ class WineBarAddress extends StatelessWidget {
         Container(
             margin: const EdgeInsets.only(left: kDefaultPadding / 2),
             child: Text(
-              addr,
+              "$addr",
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   decoration: TextDecoration.underline,
@@ -301,34 +305,43 @@ class TimeOpen extends StatelessWidget {
 }
 
 class WineBarInsta extends StatelessWidget {
-  const WineBarInsta({Key? key}) : super(key: key);
+  final String? instaAddr;
+  WineBarInsta(this.instaAddr, {Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-            width: 30,
-            height: 30,
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: kDefaultPadding),
-            child: const FaIcon(FontAwesomeIcons.instagram, size: 15)),
-        Container(
-            margin: const EdgeInsets.only(left: kDefaultPadding / 2),
-            child: Text(
-              "instagram address",
-              textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline5!.copyWith(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15),
-            )),
-      ],
-    );
+    List<String>? addressList = instaAddr?.split(".com/");
+    addressList = addressList?[1].split("?");
+    return GestureDetector(
+        onTap: () {
+          _launchURL(instaAddr);
+        },
+        child: Row(
+          children: <Widget>[
+            Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(left: kDefaultPadding),
+                child: const FaIcon(FontAwesomeIcons.instagram, size: 15)),
+            Container(
+                margin: const EdgeInsets.only(left: kDefaultPadding / 2),
+                child: Text(
+                  "@${addressList?[0]}",
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15),
+                )),
+          ],
+        ));
   }
 }
 
 class Subheading extends StatelessWidget {
-  const Subheading({Key? key}) : super(key: key);
+  final ItemContext? barContent;
+  const Subheading(this.barContent, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -338,7 +351,7 @@ class Subheading extends StatelessWidget {
             margin: const EdgeInsets.only(
                 left: kDefaultPadding, top: kDefaultPadding / 4),
             child: Text(
-              "가르고뜨",
+              "${barContent?.name}",
               textAlign: TextAlign.start,
               style: Theme.of(context)
                   .textTheme
@@ -352,7 +365,7 @@ class Subheading extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.black45, borderRadius: BorderRadius.circular(50)),
             child: Text(
-              "서울 / 서초구",
+              "${barContent?.address}",
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.normal,
@@ -365,7 +378,8 @@ class Subheading extends StatelessWidget {
 }
 
 class Description extends StatelessWidget {
-  const Description({Key? key}) : super(key: key);
+  final String? description;
+  const Description(this.description, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +388,7 @@ class Description extends StatelessWidget {
         margin: const EdgeInsets.only(left: kDefaultPadding, top: 12),
         width: width,
         child: Text(
-          "서초구에 위치한 혼술하기 좋은 와인바",
+          "$description",
           textAlign: TextAlign.start,
           style: Theme.of(context)
               .textTheme
@@ -412,3 +426,11 @@ class Description extends StatelessWidget {
 //         ),
 //       );
 // }
+
+_launchURL(String? address) async {
+  if (await canLaunch("$address")) {
+    await launch("$address");
+  } else {
+    throw 'Could not launch $address';
+  }
+}
