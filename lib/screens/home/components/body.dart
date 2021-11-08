@@ -371,7 +371,7 @@ class CarouselPageState extends State<CarouselPage> {
 }
 
 _launchURL() async {
-  const url = 'https://flutter.io';
+  const url = 'https://form.typeform.com/to/BoXyXDCF';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
