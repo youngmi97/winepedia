@@ -16,21 +16,6 @@ Future<Position> _determinePosition() async {
   return await Geolocator.getCurrentPosition();
 }
 
-// Future<String> fetchAlbum() async {
-//   final response = await http.get(Uri.parse(
-//       'https://79jx2bj9ed.execute-api.ap-northeast-2.amazonaws.com/dev/search-wine?name=Riesling'));
-//   if (response.statusCode == 200) {
-//     // If the server did return a 200 OK response,
-//     // then parse the JSON.
-//     print(response.body);
-//     return response.body;
-//   } else {
-//     // If the server did not return a 200 OK response,
-//     // then throw an exception.
-//     throw Exception('Failed to load album');
-//   }
-// }
-
 class BaseMapPage extends StatefulWidget {
   const BaseMapPage({Key? key}) : super(key: key);
   @override
@@ -56,44 +41,25 @@ class _BaseMapPageState extends State<BaseMapPage> {
   LatLng initialPos = const LatLng(37.563153, 126.962190);
   @override
   void initState() {
-    //OverlayImage image = await OverlayImage.fromAssetImage(assetName: "assets/images/pin_default.png", context: context);
-    _coordinates.forEach(
-      (point) {
-        _markers.add(
-          Marker(
-              markerId: point.json.toString(),
-              position: point,
-              width: 27,
-              height: 33,
-              iconTintColor: Colors.brown[900],
-              onMarkerTab: _onMarkerTap),
-        );
-      },
-    );
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      _coordinates.forEach(
+        (point) async {
+          final OverlayImage markerImage = await OverlayImage.fromAssetImage(
+              assetName: "assets/images/bar_marker.png", context: context);
+          _markers.add(
+            Marker(
+                markerId: point.json.toString(),
+                position: point,
+                icon: markerImage,
+                width: 32,
+                height: 39,
+                iconTintColor: Colors.black26,
+                onMarkerTab: _onMarkerTap),
+          );
+        },
+      );
+    });
     super.initState();
-    // _coordinates.forEach((point) {
-    //   WidgetsBinding.instance!.addPostFrameCallback((post) {
-    //     OverlayImage.fromAssetImage(
-    //             assetName: 'icon/marker.png', context: context)
-    //         .then((image) {
-    //       print(image);
-    //       _markers.add(Marker(
-    //           markerId: point.json.toString(),
-    //           position: point,
-    //           captionText: "커스텀 아이콘",
-    //           captionColor: Colors.indigo,
-    //           captionTextSize: 20.0,
-    //           alpha: 0.8,
-    //           captionOffset: 30,
-    //           icon: image,
-    //           anchor: AnchorPoint(0.5, 1),
-    //           width: 45,
-    //           height: 45,
-    //           infoWindow: '인포 윈도우',
-    //           onMarkerTab: _onMarkerTap));
-    //     });
-    //   });
-    // });
   }
 
   @override
@@ -163,9 +129,9 @@ class _BaseMapPageState extends State<BaseMapPage> {
                     _moveCameraIndex(index);
                     for (var i = 0; i < _markers.length; i++) {
                       if (i == initialPage) {
-                        _markers[i].iconTintColor = const Color(0xFFCC0000);
+                        // _markers[i].iconTintColor = Colors.black26;
                       } else {
-                        _markers[i].iconTintColor = Colors.green;
+                        // _markers[i].iconTintColor = Colors.black26;
                       }
                     }
                   },
