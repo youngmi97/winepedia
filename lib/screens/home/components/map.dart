@@ -44,6 +44,10 @@ class _BaseMapPageState extends State<BaseMapPage> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       _coordinates.forEach(
         (point) async {
+          final OverlayImage markerImageEmpty =
+              await OverlayImage.fromAssetImage(
+                  assetName: "assets/images/bar_marker_empty.png",
+                  context: context);
           final OverlayImage markerImage = await OverlayImage.fromAssetImage(
               assetName: "assets/images/bar_marker.png", context: context);
           _markers.add(
