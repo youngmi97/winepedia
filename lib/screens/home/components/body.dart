@@ -30,14 +30,9 @@ Future<ItemContext> fetchData(String Id) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
 
-    // print('데이터 수신' + response.contentLength.toString() + "byte");
-    // print(response.body);
-    // print(parsePhotos((response.body)).name);
-    print(parsePhotos((response.body)).phoneNumber);
-    // print(parsePhotos((response.body)).address);
+    //print(parsePhotos((response.body)).roseCatalogue[0]);
     return parsePhotos(response.body);
   } else {
-    //print(response.body);
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
@@ -327,7 +322,7 @@ class CarouselPageState extends State<CarouselPage> {
 }
 
 _launchURL() async {
-  const url = 'https://flutter.io';
+  const url = 'https://form.typeform.com/to/BoXyXDCF';
   if (await canLaunch(url)) {
     await launch(url);
   } else {

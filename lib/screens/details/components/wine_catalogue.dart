@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:winepedia/screens/winedetails/taste_bar.dart';
 
 class WineCatalogue extends StatelessWidget {
-  const WineCatalogue({Key? key}) : super(key: key);
+  final List<dynamic>? roseCatalogue;
+  const WineCatalogue(this.roseCatalogue, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,36 +12,22 @@ class WineCatalogue extends StatelessWidget {
         home: Scaffold(
             //Here you can set what ever background color you need.
             backgroundColor: Colors.grey[100],
-            body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            body:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
+                    Widget>[
+              Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const TasteBar(
-                                      "로스 바스코스", "카르보네 소비뇽", "italy")),
-                            );
-                          },
-                          child: const WineDisplayContainer(
-                              "로스 바스코스", "카르보네 소비뇽", "italy")),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TasteBar(
-                                    "파미유 페랑", "라비에이유 페름루즈", "france")),
-                          );
-                        },
-                        child: const WineDisplayContainer(
-                            "파미유 페랑", "라비에이유 페름루즈", "france"),
-                      )
-                    ],
-                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TasteBar(
+                                  "${roseCatalogue?[0]}", "카르보네 소비뇽", "italy")),
+                        );
+                      },
+                      child: WineDisplayContainer(
+                          "${roseCatalogue?[0]}", "카르보네 소비뇽", "italy")),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -51,9 +38,23 @@ class WineCatalogue extends StatelessWidget {
                       );
                     },
                     child: const WineDisplayContainer(
-                        "마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
+                        "파미유 페랑", "라비에이유 페름루즈", "france"),
                   )
-                ])));
+                ],
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const TasteBar("파미유 페랑", "라비에이유 페름루즈", "france")),
+                  );
+                },
+                child:
+                    const WineDisplayContainer("마샤렐리", "몬테풀치아노 다부르쪼", "italy"),
+              )
+            ])));
   }
 }
 

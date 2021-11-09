@@ -47,6 +47,7 @@ class ScrollScreenState extends State<ScrollScreen> {
               builder: (context, controller) {
                 return SingleChildScrollView(
                   controller: controller,
+                  physics: ClampingScrollPhysics(),
                   child: SizedBox(
                     height: 1095.6,
                     child: Stack(children: <Widget>[
@@ -187,12 +188,12 @@ class ScrollScreenStart extends StatelessWidget {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              WineCatalogue(),
-              FaIcon(FontAwesomeIcons.instagram),
-              Icon(Icons.directions_bike),
-              Icon(Icons.directions_bike),
+              WineCatalogue(barContent?.roseCatalogue),
+              WineCatalogue(barContent?.roseCatalogue),
+              WineCatalogue(barContent?.roseCatalogue),
+              WineCatalogue(barContent?.roseCatalogue),
             ],
           ),
         ),
@@ -306,7 +307,7 @@ class TimeOpen extends StatelessWidget {
 
 class WineBarInsta extends StatelessWidget {
   final String? instaAddr;
-  WineBarInsta(this.instaAddr, {Key? key}) : super(key: key);
+  const WineBarInsta(this.instaAddr, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

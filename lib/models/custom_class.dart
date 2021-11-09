@@ -29,21 +29,27 @@ class ItemContext {
   String sAddr;
   String description;
   String instaAddr;
-  ItemContext(
-      {required this.name,
-      required this.phoneNumber,
-      required this.address,
-      required this.sAddr,
-      required this.description,
-      required this.instaAddr});
+  List<dynamic> roseCatalogue;
+
+  ItemContext({
+    required this.name,
+    required this.phoneNumber,
+    required this.address,
+    required this.sAddr,
+    required this.description,
+    required this.instaAddr,
+    required this.roseCatalogue,
+  });
 
   factory ItemContext.fromJson(Map<String, dynamic> parsedJson) {
     return ItemContext(
-        name: parsedJson['NAME'],
-        phoneNumber: parsedJson['PHONE'],
-        address: parsedJson['ADDRESS'],
-        sAddr: parsedJson['SADDR'],
-        description: parsedJson['DESCRIPTION'],
-        instaAddr: parsedJson['INSTA_ADDR']);
+      name: parsedJson['NAME'],
+      phoneNumber: parsedJson['PHONE'],
+      address: parsedJson['ADDRESS'],
+      sAddr: parsedJson['SADDR'],
+      description: parsedJson['DESCRIPTION'],
+      instaAddr: parsedJson['INSTA_ADDR'],
+      roseCatalogue: parsedJson['ROSE'],
+    );
   }
 }

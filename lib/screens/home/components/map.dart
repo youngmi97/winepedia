@@ -33,13 +33,13 @@ class _BaseMapPageState extends State<BaseMapPage> {
   int initialPage = 0;
   final List<Marker> _markers = [];
   final List<LatLng> _coordinates = const [
-    LatLng(37.563153, 126.962190),
-    LatLng(37.533153, 126.922190),
-    LatLng(37.583153, 126.982190),
-    LatLng(37.541153, 126.952190),
+    LatLng(37.50310059666677, 127.02686362667359),
+    LatLng(37.49224267309452, 127.02954231381753),
+    LatLng(37.503448818680404, 127.02667444016569),
+    LatLng(37.494844939278025, 127.0281809843455),
+    LatLng(37.50235677686214, 127.03556508784166)
   ];
 
-  LatLng initialPos = const LatLng(37.563153, 126.962190);
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
@@ -60,6 +60,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
         },
       );
     });
+    _moveCameraIndex(0);
     super.initState();
   }
 
@@ -142,6 +143,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
                   CarouselPage(1),
                   CarouselPage(2),
                   CarouselPage(3),
+                  CarouselPage(4),
                 ],
               ))
         ],
