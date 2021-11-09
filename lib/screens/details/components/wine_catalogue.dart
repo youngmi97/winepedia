@@ -26,8 +26,8 @@ class WineCatalogue extends StatelessWidget {
                                   "${roseCatalogue?[0]}", "카르보네 소비뇽", "italy")),
                         );
                       },
-                      child: WineDisplayContainer(
-                          "${roseCatalogue?[0]}", "카르보네 소비뇽", "italy")),
+                      child:
+                          WineDisplayContainer("파미유 페랑", "카르보네 소비뇽", "italy")),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(

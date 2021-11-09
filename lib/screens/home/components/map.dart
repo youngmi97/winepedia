@@ -59,8 +59,8 @@ class _BaseMapPageState extends State<BaseMapPage> {
           );
         },
       );
+      setState(() {});
     });
-    _moveCameraIndex(0);
     super.initState();
   }
 
@@ -136,6 +136,7 @@ class _BaseMapPageState extends State<BaseMapPage> {
                         // _markers[i].iconTintColor = Colors.black26;
                       }
                     }
+                    print(_markers[initialPage].icon.assetName);
                   },
                 ),
                 items: const [

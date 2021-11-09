@@ -246,8 +246,9 @@ class WineBarOpen extends StatelessWidget {
             margin: const EdgeInsets.only(top: 13.5, left: kDefaultPadding),
             child: const FaIcon(FontAwesomeIcons.clock, size: 15)),
         Expanded(
+          flex: 4,
           child: ListTileTheme(
-              contentPadding: const EdgeInsets.only(left: kDefaultPadding / 2),
+              //contentPadding: const EdgeInsets.only(left: kDefaultPadding / 2),
               child: Theme(
                   data: ThemeData(
                     dividerColor: Colors.transparent,
@@ -259,6 +260,7 @@ class WineBarOpen extends StatelessWidget {
                     initiallyExpanded: false,
                     //childrenPadding: EdgeInsets.all(16),
                     title: TimeOpen(date.weekday - 1),
+                    controlAffinity: ListTileControlAffinity.platform,
                     children: [
                       TimeOpen(0),
                       TimeOpen(1),
@@ -269,6 +271,10 @@ class WineBarOpen extends StatelessWidget {
                       TimeOpen(6),
                     ],
                   ))),
+        ),
+        Expanded(
+          flex: 3,
+          child: SizedBox(width: 10),
         )
       ],
     );
@@ -291,7 +297,7 @@ class TimeOpen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width - 30 - 2 * kDefaultPadding,
+      //width: size.width * 0.1,
       //margin: const EdgeInsets.only(left: kDefaultPadding / 2),
       child: Text(
         openHours[date],
@@ -331,7 +337,7 @@ class WineBarInsta extends StatelessWidget {
                   "@${addressList?[0]}",
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Colors.blue,
+                      color: Color(0xFF00376B),
                       fontWeight: FontWeight.w400,
                       fontSize: 15),
                 )),
